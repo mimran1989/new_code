@@ -29,7 +29,8 @@
 		"test:functional": "cd tests; cypress run -b chrome",
 		"test:functional:managed": "cd tests; cypress run --env namespacePrefix=PSQ -b chrome",
 		"test:functional:live": "cd tests; cypress open -b chrome --e2e",
-		"test:functional:managed:live": "cd tests; cypress open --env namespacePrefix=PSQ -b chrome --e2e"
+		"test:functional:managed:live": "cd tests; cypress open --env namespacePrefix=PSQ -b chrome --e2e",
+		"itest":"cd tests; cypress open"
 	},
 	"author": "Provus",
 	"license": "ISC",
