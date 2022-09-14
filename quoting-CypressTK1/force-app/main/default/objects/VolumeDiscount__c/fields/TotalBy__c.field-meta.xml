@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalBy__c</fullName>
+    <description
+	>Selection indicating at what level to apply tier discount details to total whether at the overall quote level, quote period or period group level.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Choose which level to apply the volume discount</inlineHelpText>
+    <label>Total by</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Quote</fullName>
+                <default>false</default>
+                <label>Quote</label>
+            </value>
+            <value>
+                <fullName>Period</fullName>
+                <default>false</default>
+                <label>Period</label>
+            </value>
+            <value>
+                <fullName>Period Group</fullName>
+                <default>false</default>
+                <label>Period Group</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

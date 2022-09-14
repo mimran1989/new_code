@@ -1,0 +1,49 @@
+name: Release merge flow
+
+on:
+  push:
+    branches:
+      - latest
+
+jobs:
+  cancel-previous-run:
+    name: Cancel Active Deployments
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+  build-release:
+    needs: [cancel-previous-run]
+    name: Build release
+    runs-on: ubuntu-latest
+    container:
+      image: provus1/provus-ci:2.0
+
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Build release
+        run: |
+          cp -R . /source
+          cd /source
+
+          mkdir node_modules
+          cp -R /node_modules/* /source/node_modules
+          npm install --silent
+
+          echo "\$token" > build/token.txt
+          sed -i 's?$token?${{ env.HUB_TOKEN }}?g' build/token.txt
+
+          npx semantic-release
+        env:
+          HUB_TOKEN: ${{ secrets.HUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BUILD_MANAGER_TOKEN }}
+          GIT_AUTHOR_NAME: 'provus-release-manager'
+          GIT_AUTHOR_EMAIL: 'release-manager@provusinc.com'
+          GIT_COMMITTER_NAME: 'provus-release-manager'
+          GIT_COMMITTER_EMAIL: 'release-manager@provusinc.com'

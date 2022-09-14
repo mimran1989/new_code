@@ -1,0 +1,134 @@
+<template>
+	<c-quick-action-panel header={labels.LABEL_SUBMIT_FOR_APPROVAL_HEADER}>
+		<div class="slds-col slds-size_1-of-1">
+			<div class="slds-grid slds-gutters slds-wrap">
+				<template for:each={scenarios} for:item="scenario">
+					<div class="slds-col slds-size_1-of-2 slds-p-bottom_small" key={scenario.Id}>
+						<article class="slds-card slds-card_boundary --slds-c-card-shadow">
+							<div class="slds-grid slds-card__header">
+								<header class="slds-media slds-media_center slds-has-flexi-truncate">
+									<div class="slds-media__body">
+										<div class="slds-col slds-size_1-of-1 slds-text-body_small slds-p-left_none">
+											<span>Quote</span>
+										</div>
+										<div class="slds-col slds-size_1-of-1 slds-p-left_none">
+											<h2 class="slds-card__header-title">
+												<span class="slds-truncate"> {scenario.Name} </span>
+											</h2>
+										</div>
+									</div>
+									<div class="slds-grid slds-gutters">
+										<div class="slds-col slds-size_3-of-4 slds-text-align_left">
+											<div
+												class="slds-col slds-size_1-of-1 slds-text-body_small slds-text-color_weak"
+											>
+												<span>Created</span>
+											</div>
+											<div class="slds-col slds-size_1-of-1">
+												<lightning-formatted-date-time
+													value={scenario.CreatedDate}
+												></lightning-formatted-date-time>
+											</div>
+										</div>
+										<div class="slds-col slds-size_1-of-4">
+											<lightning-input
+												class="scenario-checkbox"
+												type="checkbox"
+												data-id={scenario.Id}
+												checked={scenario.isChecked}
+												disabled={scenario.isCheckboxDisabled}
+												onchange={handleCheckScenario}
+												variant="label-hidden"
+											></lightning-input>
+										</div>
+									</div>
+								</header>
+							</div>
+							<div class="slds-card__body slds-card__body_inner">
+								<div
+									class="slds-col slds-size_1-of-1 slds-text-body_small slds-text-color_weak slds-p-left_none"
+								>
+									<span>Account</span>
+								</div>
+								<div class="slds-col slds-size_1-of-1 slds-text-heading_small slds-p-left_none">
+									<span>{scenario.AccountName}</span>
+								</div>
+							</div>
+							<div class="slds-grid slds-card__body slds-card__body_inner">
+								<div class="slds-col slds-size_1-of-3 slds-p-left_none">
+									<div
+										class="slds-col slds-size_1-of-1 slds-text-body_small slds-text-color_weak slds-p-left_none"
+									>
+										<span>Amount</span>
+									</div>
+									<div class="slds-col slds-size_1-of-1 slds-text-heading_small slds-p-left_none">
+										<lightning-formatted-number
+											value={scenario.totalAmount}
+											format-style="currency"
+											currency-code="USD"
+											maximum-fraction-digits="2"
+										></lightning-formatted-number>
+									</div>
+								</div>
+								<div class="slds-col slds-size_1-of-3 slds-p-left_none">
+									<div
+										class="slds-col slds-size_1-of-1 slds-text-body_small slds-text-color_weak slds-p-left_none"
+									>
+										<span>Margin</span>
+									</div>
+									<div class="slds-col slds-size_1-of-1 slds-text-heading_small slds-p-left_none">
+										<lightning-formatted-number
+											value={scenario.marginPercent}
+											format-style="percent"
+											maximum-fraction-digits="2"
+										></lightning-formatted-number>
+									</div>
+								</div>
+								<div class="slds-col slds-size_1-of-3 slds-p-left_none">
+									<div
+										class="slds-col slds-size_1-of-1 slds-text-body_small slds-text-color_weak slds-p-left_none"
+									>
+										<span>Cost</span>
+									</div>
+									<div class="slds-col slds-size_1-of-1 slds-text-heading_small slds-p-left_none">
+										<lightning-formatted-number
+											value={scenario.totalCost}
+											format-style="currency"
+											currency-code="USD"
+											maximum-fraction-digits="2"
+										></lightning-formatted-number>
+									</div>
+								</div>
+							</div>
+							<div class="slds-card__body slds-card__body_inner">
+								<lightning-textarea
+									class="scenario-comments"
+									data-id={scenario.Id}
+									label={labels.LABEL_COMMENTS_FOR_APPROVER}
+									max-length="180"
+									onchange={handleAddScenarioComments}
+									type="text"
+									value={scenario.Comments}
+								></lightning-textarea>
+							</div>
+						</article>
+					</div>
+				</template>
+			</div>
+		</div>
+		<div slot="footer">
+			<lightning-button
+				class="slds-p-right_x-small"
+				variant="neutral"
+				label={labels.LABEL_CANCEL}
+				onclick={handleCloseDialog}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				disabled={isDisabled}
+				label={labels.LABEL_SUBMIT_FOR_APPROVAL}
+				onclick={handleSubmitForApproval}
+			></lightning-button>
+		</div>
+	</c-quick-action-panel>
+</template>

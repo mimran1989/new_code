@@ -1,0 +1,7 @@
+<!--
+  - Provus Services Quoting
+  - Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<aura:component description="compareQuotes" implements="lightning:isUrlAddressable" access="global">
+	<c:quoteCompare></c:quoteCompare>
+</aura:component>

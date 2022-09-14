@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AlignToActivityOrMilestone__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Type__c,&apos;Occurs on a Date&apos;),&quot;N/A&quot;,
+IF(ISPICKVAL(Type__c,&apos;Aligned to Project Activity&apos;), MilestoneId__r.Name,
+IF(ISPICKVAL(Type__c,&apos;Aligned to another Milestone&apos;),MilestoneId__r.Name,&quot;N/A&quot;)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Align to Activity or Milestone</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,8 @@
+Hello {!ApprovalRequest.Process_Approver},<br>
+<br>
+You are receiving a request to review and approve one of the following {!PSQ__ApprovalRequest__c.PSQ__PrimaryQuoteName__c} quotes for {!PSQ__ApprovalRequest__c.PSQ__PrimaryAccountName__c}. <a href="{!MID(PSQ__ApprovalRequest__c.Link, 1, LEN(PSQ__ApprovalRequest__c.Link)-15)}/lightning/cmp/psq__compareQuotes?c__requestId={!PSQ__ApprovalRequest__c.Id}">Click here</a> and you will be directed to the quotes where you will be asked to provide an approval.<br>
+<br>
+Thank you for your prompt response to this request. <br>
+<br>
+Kind Regards,<br>
+{!Approval_Requesting_User.Name}

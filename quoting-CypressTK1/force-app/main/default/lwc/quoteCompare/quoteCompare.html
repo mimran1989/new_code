@@ -1,0 +1,51 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Quote Compare -->
+<template>
+	<template if:true={isInvalidRequest}>
+		<div class="slds-box slds-theme_default">{LABEL_INVALID_APPROVAL_REQUEST}</div>
+	</template>
+	<div class="slds-grid">
+		<template for:each={quotes} for:item="quote">
+			<div key={quote.name} class={quote.css}>
+				<span>
+					<c-quote-overview quote={quote}></c-quote-overview>
+				</span>
+			</div>
+		</template>
+	</div>
+	<template if:true={hasQuotes}>
+		<article class="slds-card reject-container">
+			<div class="slds-card__header reject-flex">
+				<div class="slds-p-right_small reject-text-box">
+					<lightning-input
+						class="reject-comments-input"
+						label=""
+						required="true"
+						variant="label-hidden"
+						onchange={handleChange}
+					></lightning-input>
+				</div>
+				<div>
+					<template if:true={isRejectDisabled}>
+						<lightning-button
+							class="slds-float_right"
+							label={LABEL_REJECT_WITH_COMMENTS}
+							disabled="true"
+						></lightning-button>
+					</template>
+					<template if:false={isRejectDisabled}>
+						<lightning-button
+							class="slds-float_right"
+							label={LABEL_REJECT_WITH_COMMENTS}
+							onclick={handleReject}
+						></lightning-button>
+					</template>
+				</div>
+			</div>
+		</article>
+	</template>
+</template>

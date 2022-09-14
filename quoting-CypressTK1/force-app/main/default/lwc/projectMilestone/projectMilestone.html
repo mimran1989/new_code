@@ -1,0 +1,34 @@
+<template>
+	<c-message-service
+		boundary="project-milestone"
+		onflowfinish={handleFlowFinish}
+	></c-message-service>
+	<div class="action-container slds-m-around_medium">
+		<div class="action-container-left"></div>
+		<div class="action-container-right">
+			<lightning-button-group>
+				<lightning-button label={label.NewButton} onclick={handleAddMilestone}> </lightning-button>
+				<lightning-button label={label.DeleteButton} onclick={handleDelete}> </lightning-button>
+			</lightning-button-group>
+			<c-confirmation-modal
+				title={label.LABEL_DELETE_MILESTONE_HEADER}
+				pop-up-message={label.LABEL_DELETE_MILESTONE_MESSAGE}
+				if:true={showConfirmDeleteDialog}
+				onconfirm={handleDeleteOnConfirm}
+			>
+			</c-confirmation-modal>
+		</div>
+	</div>
+	<div class="slds-m-around_medium">
+		<c-soql-datatable
+			class="milestone-datatable"
+			column-config-dev-name="ProjectMilestoneDatatable"
+			column-labels={columnLabels}
+			checkbox-type="multi"
+			sorted-by={sortedBy}
+			sorted-direction="asc"
+			query-string={queryStr}
+			onrowselection={handleRowSelection}
+		></c-soql-datatable>
+	</div>
+</template>

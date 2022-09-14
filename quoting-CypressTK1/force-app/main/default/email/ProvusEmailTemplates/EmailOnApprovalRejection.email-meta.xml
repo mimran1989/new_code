@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description
+	>The email sent to the approval requesting user when a quote is rejected</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EmailOnApprovalRejection</name>
+    <style>none</style>
+    <subject>Your Quote is Rejected</subject>
+    <textOnly>Hello {!PSQ__ApprovalRequest__c.OwnerFullName},
+
+You are receiving this email to notify you that the quote: "{!PSQ__ApprovalRequest__c.PrimaryQuoteName__c}", which you had submitted has been rejected for the following reason: {!ApprovalRequest__c.RejectionReason__c}.
+
+Kind Regards,
+  
+{!ApprovalRequest.Process_Approver}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

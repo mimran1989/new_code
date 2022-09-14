@@ -1,0 +1,588 @@
+/*
+ * Provus Services Quoting
+ * Copyright (c) 2021 Provus Inc. All rights reserved.
+ */
+public with sharing class QuoteItemCellService {
+	/**
+	 * Queries and returns the quote item cells with fields needed for merge for the given
+	 * quote item IDs.
+	 * @param quoteItemIds A list of quote item IDs
+	 *
+	 * @return A list of quote item cells under the given quote item IDs
+	 */
+	public static List<QuoteItemCell__c> getCellsForMergeFor(Set<Id> quoteItemIds) {
+		QueryRequest queryRequest = new QueryRequest(Schema.QuoteItemCell__c.SObjectType);
+		queryRequest.requestedFields = SObjectUtility.getCustomFieldsForSObject(
+			Schema.QuoteItemCell__c.SObjectType + ''
+		);
+		queryRequest.setFilterBy(
+			new Map<String, Set<Id>>{ QuoteItemCell.FIELD_NAME_QUOTE_ITEM_ID => quoteItemIds }
+		);
+		return (List<QuoteItemCell__c>) SOQLUtility.querySObject(queryRequest);
+	}
+
+	public static QuoteItemCellResponse createQuoteItemCell(
+		QuoteItemCellRequest itemCellRequest,
+		Map<Decimal, EstimateService.PeriodDetails> termByPeriodSequence
+	) {
+		Decimal remainingHours = itemCellRequest.itemDurationHours;
+		Integer cellIndex = itemCellRequest.startCellIndex;
+		QuoteItemCellResponse itemCellResp = new QuoteItemCellResponse();
+
+		Decimal availabilityFactor = 1;
+		if (itemCellRequest.availabilityPercentage != null) {
+			availabilityFactor = itemCellRequest.availabilityPercentage / 100;
+		}
+
+		QuoteItemCell__c itemCell = new QuoteItemCell__c();
+
+		for (; remainingHours > 0; cellIndex++) {
+			EstimateService.PeriodDetails periodDetail = termByPeriodSequence.get(cellIndex);
+			Decimal workableHours = periodDetail.workableHours * availabilityFactor;
+			Decimal assignedPeriodHours = (remainingHours > workableHours
+				? workableHours
+				: remainingHours);
+
+			itemCell.put(
+				cellColumnName(cellIndex),
+				(itemCellRequest.isLaborUnitsInHours
+					? assignedPeriodHours
+					: assignedPeriodHours / periodDetail.periodHours)
+			);
+			itemCellResp.endCellHours = assignedPeriodHours;
+			remainingHours -= assignedPeriodHours;
+		}
+
+		itemCellResp.quoteItemCell = itemCell;
+		itemCellResp.endCellIndex = cellIndex - 1;
+		return itemCellResp;
+	}
+
+	public class QuoteItemCellResponse {
+		public QuoteItemCell__c quoteItemCell;
+		public Integer endCellIndex;
+		public Decimal endCellHours;
+	}
+
+	public class QuoteItemCellRequest {
+		public Decimal itemDurationHours;
+		public Integer startCellIndex;
+		public Decimal availabilityPercentage = 100;
+		public Boolean isLaborUnitsInHours = false;
+	}
+
+	/**
+	 * Given a set of quote item cell ids will retrieve quote item cell records
+	 *
+	 * @param quoteItemCellIds set of quote item cell Ids
+	 *
+	 * @return returns list of quote item cell records including all cell values
+	 */
+	public static List<QuoteItemCell__c> getQuoteItemCellsByQuoteItemIds(Set<Id> quoteItemCellIds) {
+		List<QuoteItemCell__c> quoteItemCells = [
+			SELECT
+				Id,
+				Name,
+				QuoteItemId__c,
+				C001__c,
+				C002__c,
+				C003__c,
+				C004__c,
+				C005__c,
+				C006__c,
+				C007__c,
+				C008__c,
+				C009__c,
+				C010__c,
+				C011__c,
+				C012__c,
+				C013__c,
+				C014__c,
+				C015__c,
+				C016__c,
+				C017__c,
+				C018__c,
+				C019__c,
+				C020__c,
+				C021__c,
+				C022__c,
+				C023__c,
+				C024__c,
+				C025__c,
+				C026__c,
+				C027__c,
+				C028__c,
+				C029__c,
+				C030__c,
+				C031__c,
+				C032__c,
+				C033__c,
+				C034__c,
+				C035__c,
+				C036__c,
+				C037__c,
+				C038__c,
+				C039__c,
+				C040__c,
+				C041__c,
+				C042__c,
+				C043__c,
+				C044__c,
+				C045__c,
+				C046__c,
+				C047__c,
+				C048__c,
+				C049__c,
+				C050__c,
+				C051__c,
+				C052__c,
+				C053__c,
+				C054__c,
+				C055__c,
+				C056__c,
+				C057__c,
+				C058__c,
+				C059__c,
+				C060__c,
+				C061__c,
+				C062__c,
+				C063__c,
+				C064__c,
+				C065__c,
+				C066__c,
+				C067__c,
+				C068__c,
+				C069__c,
+				C070__c,
+				C071__c,
+				C072__c,
+				C073__c,
+				C074__c,
+				C075__c,
+				C076__c,
+				C077__c,
+				C078__c,
+				C079__c,
+				C080__c,
+				C081__c,
+				C082__c,
+				C083__c,
+				C084__c,
+				C085__c,
+				C086__c,
+				C087__c,
+				C088__c,
+				C089__c,
+				C090__c,
+				C091__c,
+				C092__c,
+				C093__c,
+				C094__c,
+				C095__c,
+				C096__c,
+				C097__c,
+				C098__c,
+				C099__c,
+				C100__c,
+				C101__c,
+				C102__c,
+				C103__c,
+				C104__c,
+				C105__c,
+				C106__c,
+				C107__c,
+				C108__c,
+				C109__c,
+				C110__c,
+				C111__c,
+				C112__c,
+				C113__c,
+				C114__c,
+				C115__c,
+				C116__c,
+				C117__c,
+				C118__c,
+				C119__c,
+				C120__c,
+				C121__c,
+				C122__c,
+				C123__c,
+				C124__c,
+				C125__c,
+				C126__c,
+				C127__c,
+				C128__c,
+				C129__c,
+				C130__c,
+				C131__c,
+				C132__c,
+				C133__c,
+				C134__c,
+				C135__c,
+				C136__c,
+				C137__c,
+				C138__c,
+				C139__c,
+				C140__c,
+				C141__c,
+				C142__c,
+				C143__c,
+				C144__c,
+				C145__c,
+				C146__c,
+				C147__c,
+				C148__c,
+				C149__c,
+				C150__c,
+				C151__c,
+				C152__c,
+				C153__c,
+				C154__c,
+				C155__c,
+				C156__c,
+				C157__c,
+				C158__c,
+				C159__c,
+				C160__c,
+				C161__c,
+				C162__c,
+				C163__c,
+				C164__c,
+				C165__c,
+				C166__c,
+				C167__c,
+				C168__c,
+				C169__c,
+				C170__c,
+				C171__c,
+				C172__c,
+				C173__c,
+				C174__c,
+				C175__c,
+				C176__c,
+				C177__c,
+				C178__c,
+				C179__c,
+				C180__c,
+				C181__c,
+				C182__c,
+				C183__c,
+				C184__c,
+				C185__c,
+				C186__c,
+				C187__c,
+				C188__c,
+				C189__c,
+				C190__c,
+				C191__c,
+				C192__c,
+				C193__c,
+				C194__c,
+				C195__c,
+				C196__c,
+				C197__c,
+				C198__c,
+				C199__c,
+				C200__c,
+				C201__c,
+				C202__c,
+				C203__c,
+				C204__c,
+				C205__c,
+				C206__c,
+				C207__c,
+				C208__c,
+				C209__c,
+				C210__c,
+				C211__c,
+				C212__c,
+				C213__c,
+				C214__c,
+				C215__c,
+				C216__c,
+				C217__c,
+				C218__c,
+				C219__c,
+				C220__c,
+				C221__c,
+				C222__c,
+				C223__c,
+				C224__c,
+				C225__c,
+				C226__c,
+				C227__c,
+				C228__c,
+				C229__c,
+				C230__c,
+				C231__c,
+				C232__c,
+				C233__c,
+				C234__c,
+				C235__c,
+				C236__c,
+				C237__c,
+				C238__c,
+				C239__c,
+				C240__c,
+				C241__c,
+				C242__c,
+				C243__c,
+				C244__c,
+				C245__c,
+				C246__c,
+				C247__c,
+				C248__c,
+				C249__c,
+				C250__c,
+				C251__c,
+				C252__c,
+				C253__c,
+				C254__c,
+				C255__c,
+				C256__c,
+				C257__c,
+				C258__c,
+				C259__c,
+				C260__c,
+				C261__c,
+				C262__c,
+				C263__c,
+				C264__c,
+				C265__c,
+				C266__c,
+				C267__c,
+				C268__c,
+				C269__c,
+				C270__c,
+				C271__c,
+				C272__c,
+				C273__c,
+				C274__c,
+				C275__c,
+				C276__c,
+				C277__c,
+				C278__c,
+				C279__c,
+				C280__c,
+				C281__c,
+				C282__c,
+				C283__c,
+				C284__c,
+				C285__c,
+				C286__c,
+				C287__c,
+				C288__c,
+				C289__c,
+				C290__c,
+				C291__c,
+				C292__c,
+				C293__c,
+				C294__c,
+				C295__c,
+				C296__c,
+				C297__c,
+				C298__c,
+				C299__c,
+				C300__c,
+				C301__c,
+				C302__c,
+				C303__c,
+				C304__c,
+				C305__c,
+				C306__c,
+				C307__c,
+				C308__c,
+				C309__c,
+				C310__c,
+				C311__c,
+				C312__c,
+				C313__c,
+				C314__c,
+				C315__c,
+				C316__c,
+				C317__c,
+				C318__c,
+				C319__c,
+				C320__c,
+				C321__c,
+				C322__c,
+				C323__c,
+				C324__c,
+				C325__c,
+				C326__c,
+				C327__c,
+				C328__c,
+				C329__c,
+				C330__c,
+				C331__c,
+				C332__c,
+				C333__c,
+				C334__c,
+				C335__c,
+				C336__c,
+				C337__c,
+				C338__c,
+				C339__c,
+				C340__c,
+				C341__c,
+				C342__c,
+				C343__c,
+				C344__c,
+				C345__c,
+				C346__c,
+				C347__c,
+				C348__c,
+				C349__c,
+				C350__c,
+				C351__c,
+				C352__c,
+				C353__c,
+				C354__c,
+				C355__c,
+				C356__c,
+				C357__c,
+				C358__c,
+				C359__c,
+				C360__c,
+				C361__c,
+				C362__c,
+				C363__c,
+				C364__c,
+				C365__c,
+				C366__c,
+				C367__c,
+				C368__c,
+				C369__c,
+				C370__c,
+				C371__c,
+				C372__c,
+				C373__c,
+				C374__c,
+				C375__c,
+				C376__c,
+				C377__c,
+				C378__c,
+				C379__c,
+				C380__c,
+				C381__c,
+				C382__c,
+				C383__c,
+				C384__c,
+				C385__c,
+				C386__c,
+				C387__c,
+				C388__c,
+				C389__c,
+				C390__c,
+				C391__c,
+				C392__c,
+				C393__c,
+				C394__c,
+				C395__c,
+				C396__c,
+				C397__c,
+				C398__c,
+				C399__c,
+				C400__c,
+				C401__c,
+				C402__c,
+				C403__c,
+				C404__c,
+				C405__c,
+				C406__c,
+				C407__c,
+				C408__c,
+				C409__c,
+				C410__c,
+				C411__c,
+				C412__c,
+				C413__c,
+				C414__c,
+				C415__c,
+				C416__c,
+				C417__c,
+				C418__c,
+				C419__c,
+				C420__c,
+				C421__c,
+				C422__c,
+				C423__c,
+				C424__c,
+				C425__c,
+				C426__c,
+				C427__c,
+				C428__c,
+				C429__c,
+				C430__c,
+				C431__c,
+				C432__c,
+				C433__c,
+				C434__c,
+				C435__c,
+				C436__c,
+				C437__c,
+				C438__c,
+				C439__c,
+				C440__c,
+				C441__c,
+				C442__c,
+				C443__c,
+				C444__c,
+				C445__c,
+				C446__c,
+				C447__c,
+				C448__c,
+				C449__c,
+				C450__c,
+				C451__c,
+				C452__c,
+				C453__c,
+				C454__c,
+				C455__c,
+				C456__c,
+				C457__c,
+				C458__c,
+				C459__c,
+				C460__c,
+				C461__c,
+				C462__c,
+				C463__c,
+				C464__c,
+				C465__c,
+				C466__c,
+				C467__c,
+				C468__c
+			FROM QuoteItemCell__c
+			WHERE QuoteItemId__c IN :quoteItemCellIds
+			WITH SECURITY_ENFORCED
+		];
+		return quoteItemCells;
+	}
+
+	public static String cellColumnName(Integer columnIdx) {
+		return 'C' + String.valueOf(columnIdx).leftPad(3, '0') + '__c';
+	}
+
+	public static Map<Id, Map<String, Decimal>> convertToPeriodValueMaps(
+		List<QuoteItemCell__c> cells
+	) {
+		Map<Id, Map<String, Decimal>> periodValueMapsByQuoteItemId = new Map<Id, Map<String, Decimal>>();
+
+		for (QuoteItemCell__c itemCell : cells) {
+			Map<String, Decimal> periodValueMap = new Map<String, Decimal>();
+			for (String period : QuoteItemCell.getPeriodColumns()) {
+				Decimal periodValue = (Decimal) itemCell.get(period);
+				if (periodValue != null) {
+					String periodToken = period.removeStartIgnoreCase(QuoteItemCell.PERIOD_FIELD_PREFIX)
+						.removeEndIgnoreCase(SObjectUtility.CUSTOM_FIELD_INDICATOR);
+
+					periodValueMap.put(periodToken, periodValue);
+				}
+			}
+
+			periodValueMapsByQuoteItemId.put(itemCell.QuoteItemId__c, periodValueMap);
+		}
+
+		return periodValueMapsByQuoteItemId;
+	}
+}

@@ -1,0 +1,145 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Quote Overview -->
+<template>
+	<article class="slds-card overview-container">
+		<div class="slds-card__header slds-grid">
+			<div class="slds-media__body slds-border_bottom">
+				<div class="slds-grid slds-grid_align-spread">
+					<div class="slds-col">
+						<h2 class="slds-page-header__title slds-p-top_x-small slds-p-bottom_x-small">
+							<span>{quote.name}</span>
+						</h2>
+					</div>
+				</div>
+				<div class="slds-p-top_x-small slds-p-bottom_xx-small">
+					<p class="slds-text-body_small slds-color__text_gray-8">{LABEL_CREATED_BY}</p>
+					<span class="slds-p-top_xx-small slds-p-right_small slds-border_right"
+						>{quote.createdBy}</span
+					>
+					<span class="slds-p-left_small">
+						<lightning-formatted-date-time
+							value={quote.createdDate}
+						></lightning-formatted-date-time>
+					</span>
+				</div>
+			</div>
+		</div>
+		<template if:true={quote.approvalSubmissionComments}>
+			<div class="slds-card__body slds-card__body_inner">
+				<article class="slds-card slds-card_boundary approval-submission-comments">
+					<div class="slds-card__body slds-card__body_inner">
+						<lightning-formatted-text
+							value={quote.approvalSubmissionComments}
+						></lightning-formatted-text>
+					</div>
+				</article>
+			</div>
+		</template>
+		<div class="slds-card__body slds-card__body_inner">
+			<article class="slds-card slds-card_boundary quote-element">
+				<div class="slds-card__body slds-card__body_inner">
+					<div class="slds-grid">
+						<div class="slds-col">
+							<lightning-icon icon-name="utility:money" size="small"></lightning-icon>
+						</div>
+						<div class="slds-col">
+							<span class="slds-text-align_center slds-text-heading_small slds-text-title_bold">
+								<lightning-formatted-number
+									value={quote.revenue}
+									format-style="currency"
+								></lightning-formatted-number>
+							</span>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div class="slds-card__body slds-card__body_inner">
+			<article class="slds-card slds-card_boundary quote-element">
+				<div class="slds-card__body slds-card__body_inner">
+					<div class="slds-grid">
+						<div class="slds-col">
+							<lightning-icon icon-name="utility:clock" size="small"></lightning-icon>
+						</div>
+						<div class="slds-col">
+							<span class="slds-text-align_center slds-text-heading_small slds-text-title_bold">
+								<lightning-formatted-number value={quote.duration}></lightning-formatted-number>
+								&nbsp;{quote.durationUnit}
+							</span>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div class="slds-card__body slds-card__body_inner">
+			<article class="slds-card slds-card_boundary quote-element">
+				<div class="slds-card__body slds-card__body_inner">
+					<div class="slds-grid">
+						<div class="slds-col">
+							<lightning-icon icon-name="utility:percent" size="small"></lightning-icon>
+						</div>
+						<div class="slds-col">
+							<span class="slds-text-align_center slds-text-heading_small slds-text-title_bold">
+								<lightning-formatted-number
+									value={quote.discount}
+									format-style="currency"
+								></lightning-formatted-number>
+							</span>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div class="slds-card__body slds-card__body_inner">
+			<article class="slds-card slds-card_boundary quote-element">
+				<div class="slds-card__body slds-card__body_inner">
+					<div class="slds-grid">
+						<div class="slds-col">
+							<lightning-icon icon-name="utility:watchlist" size="small"></lightning-icon>
+						</div>
+						<div class="slds-col">
+							<span class="slds-text-align_center slds-text-heading_small slds-text-title_bold">
+								<lightning-formatted-number
+									class="slds-p-right_small slds-border_right"
+									format-style="percent-fixed"
+									maximum-fraction-digits="2"
+									value={quote.margin}
+								></lightning-formatted-number>
+								<lightning-formatted-number
+									class="slds-p-left_small"
+									value={quote.cost}
+									format-style="currency"
+								></lightning-formatted-number>
+							</span>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div class="slds-card__body slds-card__body_inner overview-content">
+			<article class="slds-card slds-card_boundary quote-element">
+				<div class="slds-card__body slds-card__body_inner">
+					<div class="slds-grid">
+						<div class="slds-col">
+							<lightning-icon icon-name="utility:user" size="small"></lightning-icon>
+						</div>
+						<div class="slds-col">
+							<c-chart input-data={data} labels={labels} type="doughnut"></c-chart>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<footer class="slds-card__footer">
+			<lightning-button
+				variant="brand"
+				label={LABEL_APPROVE}
+				onclick={handleApprove}
+			></lightning-button>
+		</footer>
+	</article>
+</template>

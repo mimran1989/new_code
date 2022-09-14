@@ -1,0 +1,12 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Scope Parameter Dialog -->
+<template>
+	<c-message-service boundary="component-state" onsaveparams={handleSaveParams}></c-message-service>
+	<template if:true={params}>
+		<c-parameter-dialog class="parameter-dialog" params={params}></c-parameter-dialog>
+	</template>
+</template>

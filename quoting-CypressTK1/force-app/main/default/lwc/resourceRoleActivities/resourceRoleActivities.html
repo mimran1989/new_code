@@ -1,0 +1,19 @@
+<template>
+	<c-message-service class="resource-role-activities"></c-message-service>
+	<div class="header-column">
+		<lightning-input type="checkbox" label={Label.SHOWHEADCOUNTVIEW} onchange={showHeadCountView}>
+		</lightning-input>
+	</div>
+	<div class="slds-scrollable_x">
+		<div class="container" style={width}>
+			<lightning-datatable
+				key-field="id"
+				data={data}
+				columns={columns}
+				sorted-direction={sortDirection}
+				hide-checkbox-column="true"
+			>
+			</lightning-datatable>
+		</div>
+	</div>
+</template>

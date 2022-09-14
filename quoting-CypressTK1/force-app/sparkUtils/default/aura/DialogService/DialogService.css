@@ -1,0 +1,27 @@
+.THIS.big-modal .slds-modal__content {
+  max-height: calc(100vh - 65%);
+}
+
+.THIS.small-modal .slds-modal__header {
+  text-align: left;
+}
+
+.THIS .slds-modal__header {
+    text-align: left;
+}
+
+.THIS.big-modal .slds-modal__content .slds-modal__footer {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: calc(100vh - 28%);
+}
+
+.THIS .slds-modal__header .slds-modal__close {
+  top: -3rem;
+}
+
+.THIS .closeIcon svg {
+  width: var(--lwc-squareIconUtilityLarge,1.5rem);
+  height: var(--lwc-squareIconUtilityLarge,1.5rem);
+}

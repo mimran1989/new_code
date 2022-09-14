@@ -1,0 +1,20 @@
+.scope-discovery .slds-modal__container {
+	width: 70% !important;
+	max-width: 70% !important;
+	height: 100%;
+}
+
+.scope-discovery .field-title {
+	font-size: 0.75rem;
+	line-height: 1.25;
+	color: #54698d;
+	margin-bottom: 0.25rem;
+}
+
+.scope-discovery .header-column {
+	padding: 0 2rem;
+	font-size: 1rem;
+	line-height: 1.25;
+	color: #070c14;
+	margin-bottom: 0.25rem;
+}

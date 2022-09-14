@@ -1,0 +1,94 @@
+<!--
+ - quoteVolumeDiscount
+ -->
+<template>
+	<div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
+		<lightning-radio-group
+			name="volumeDiscountCategory"
+			label={labels.SelectDiscountMetric}
+			options={categoryOptions}
+			value={categoryOptionValue}
+			onchange={handleCategoryChange}
+			required="true"
+			class="radio-combo-inline"
+			type="radio"
+		></lightning-radio-group>
+		<br />
+		<lightning-radio-group
+			name="volumeDiscountTotalBy"
+			label={labels.SelectAggregatedBy}
+			options={totalByOptions}
+			value={totalByValue}
+			onchange={handleTotalByChange}
+			required="true"
+			class="radio-combo-inline"
+			type="radio"
+		></lightning-radio-group>
+		<table
+			class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right slds-m-top_small"
+		>
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th scope="col">&nbsp;</th>
+					<th scope="col">
+						<div class="slds-truncate">{labels.From}</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate">{labels.To}</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate">{labels.Discount}</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={volumeDiscountVm.tiers} for:item="tier">
+					<tr key={tier.id} class="slds-hint-parent">
+						<th>
+							<div class="slds-truncate">{tier.label}</div>
+						</th>
+						<td class="slds-align-top">
+							<lightning-input
+								type="number"
+								formatter={volumeDiscountVm.tierFieldsFormat.from.formatter}
+								step={volumeDiscountVm.tierFieldsFormat.from.step}
+								data-index={tier.id}
+								value={tier.from}
+								onblur={handleFromChange}
+								variant="label-hidden"
+								label=""
+							>
+							</lightning-input>
+						</td>
+						<td class="slds-align-top">
+							<lightning-input
+								type="number"
+								formatter={volumeDiscountVm.tierFieldsFormat.to.formatter}
+								step={volumeDiscountVm.tierFieldsFormat.to.step}
+								data-index={tier.id}
+								value={tier.to}
+								onblur={handleToChange}
+								variant="label-hidden"
+								label=""
+							>
+							</lightning-input>
+						</td>
+						<td class="slds-align-top">
+							<lightning-input
+								type="number"
+								formatter={volumeDiscountVm.tierFieldsFormat.discount.formatter}
+								step={volumeDiscountVm.tierFieldsFormat.discount.step}
+								data-index={tier.id}
+								value={tier.discount}
+								onblur={handleDiscountChange}
+								variant="label-hidden"
+								label=""
+							>
+							</lightning-input>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</div>
+</template>

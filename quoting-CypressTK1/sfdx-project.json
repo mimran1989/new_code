@@ -1,0 +1,97 @@
+{
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "Provus Services Quoting",
+            "versionName": "Phoenix",
+            "ancestorVersion": "2.37.0",
+            "versionNumber": "2.38.0.NEXT",
+            "postInstallScript": "PostInstall",
+            "branch": "latest",
+            "unpackagedMetadata": {
+                "path": "unpackaged"
+            },
+            "apexTestAccess": {
+                "permissionSets": [
+                    "ManageEstimates",
+                    "ManageEstimateTemplates",
+                    "ManageOpportunity",
+                    "ManageProposals",
+                    "ManageStandardProducts",
+                    "PricingManager",
+                    "ProductManager",
+                    "QuoteManager"
+                ]
+            }
+        },
+        {
+            "path": "force-app",
+            "default": false,
+            "package": "Provus Services Quoting:QA:Patch",
+            "versionName": "Phoenix",
+            "versionNumber": "1.0.0.NEXT",
+            "postInstallScript": "PostInstall",
+            "branch": "patch",
+            "unpackagedMetadata": {
+                "path": "unpackaged"
+            },
+            "apexTestAccess": {
+                "permissionSets": [
+                    "ManageEstimates",
+                    "ManageEstimateTemplates",
+                    "ManageOpportunity",
+                    "ManageProposals",
+                    "ManageStandardProducts",
+                    "PricingManager",
+                    "ProductManager",
+                    "QuoteManager"
+                ]
+            }
+        },
+        {
+            "path": "force-app",
+            "default": false,
+            "package": "Provus Services Quoting:QA:Next",
+            "versionName": "Phoenix",
+            "ancestorVersion": "2.280.0",
+            "versionNumber": "2.281.0.NEXT",
+            "postInstallScript": "PostInstall",
+            "branch": "next",
+            "unpackagedMetadata": {
+                "path": "unpackaged"
+            },
+            "apexTestAccess": {
+                "permissionSets": [
+                    "ManageEstimates",
+                    "ManageEstimateTemplates",
+                    "ManageOpportunity",
+                    "ManageProposals",
+                    "ManageStandardProducts",
+                    "PricingManager",
+                    "ProductManager",
+                    "QuoteManager"
+                ]
+            }
+        },
+        {
+            "path": "unpackaged",
+            "default": false
+        }
+    ],
+    "name": "quoting",
+    "namespace": "PSQ",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0",
+    "packageAliases": {
+        "Provus Services Quoting": "0Ho5Y000000TNLDSA4",
+        "Provus Services Quoting:QA:Next": "0Ho5Y000000TNLXSA4",
+        "Provus Services Quoting:QA:Patch": "0Ho5Y000000TNLcSAO",
+        "Provus Services Quoting:QA:Patch@1.0.0-1-patch": "04t5Y0000027H2lQAE",
+        "Provus Services Quoting@2.34.0-1-latest": "04t5Y0000027IRpQAM",
+        "Provus Services Quoting:QA:Next@2.202.0-2-next": "04t5Y0000027ISTQA2",
+        "Provus Services Quoting@2.35.0-2-latest": "04t5Y0000027ISiQAM",
+        "Provus Services Quoting:QA:Next@2.280.4-1-next": "04t5Y0000027IsSQAU",
+        "Provus Services Quoting:QA:Next@2.281.0-2-next": "04t5Y0000027IsmQAE"
+    }
+}

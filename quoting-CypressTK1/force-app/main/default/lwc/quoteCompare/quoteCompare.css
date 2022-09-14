@@ -1,0 +1,17 @@
+/*
+ * Provus Services Quoting
+ * Copyright (c) 2022 Provus Inc. All rights reserved.
+ */
+
+.reject-container {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.reject-flex {
+	display: flex;
+}
+
+.reject-text-box {
+	flex: 1 1 auto;
+}

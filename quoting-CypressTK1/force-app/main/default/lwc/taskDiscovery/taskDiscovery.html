@@ -1,0 +1,84 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Task Discovery -->
+<template>
+	<c-message-service boundary={uniqueBoundary}></c-message-service>
+	<div class="slds-grid">
+		<div class="slds-col">
+			<lightning-input
+				type="checkbox"
+				label="Not applicable"
+				checked={currentTask.isNotApplicable}
+				onclick={toggleApplicable}
+			></lightning-input>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-gutters slds-p-top_large">
+		<div class="slds-col">
+			<lightning-input
+				type="number"
+				read-only="true"
+				value={currentTask.totalCalculatedDuration}
+				label="Calculated Duration"
+			></lightning-input>
+		</div>
+		<div class="slds-col">
+			<lightning-input
+				data-name="levelAdjustment"
+				type="number"
+				value={currentTask.levelAdjustment}
+				label="Duration Adjustment (+/-)"
+				onchange={handleChange}
+			></lightning-input>
+		</div>
+		<div class="slds-col">
+			<lightning-input
+				data-name="adjustmentReason"
+				type="text"
+				value={currentTask.adjustmentReason}
+				label="Adjustment Reason"
+				onchange={handleChange}
+			></lightning-input>
+		</div>
+		<div class="slds-col">
+			<lightning-input
+				type="number"
+				value={currentTask.totalEstimatedDuration}
+				read-only="true"
+				label="Estimated Duration"
+			></lightning-input>
+		</div>
+		<div class="slds-col">
+			<lightning-input
+				type="text"
+				value={currentTask.resourceRoleName}
+				read-only="true"
+				label="Role"
+			></lightning-input>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-p-top_large slds-gutters">
+		<template
+			for:each={currentTask.parameterTemplates}
+			for:item="parameterTemplate"
+			for:index="parameterIndex"
+		>
+			<div class="slds-col" key={parameterTemplate.id}>
+				<c-task-parameter-input
+					data-index={parameterIndex}
+					field-label={parameterTemplate.name}
+					field-data={parameterTemplate.parameterValueTemplates}
+					value={parameterTemplate.parameterValue}
+					type={parameterTemplate.dataType}
+					onchange={handleParameterChange}
+				></c-task-parameter-input>
+			</div>
+		</template>
+	</div>
+	<div class="slds-grid slds-grid_align-end">
+		<div class="slds-col">{indexPosition}</div>
+	</div>
+</template>

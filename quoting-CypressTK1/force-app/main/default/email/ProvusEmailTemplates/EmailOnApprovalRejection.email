@@ -1,0 +1,7 @@
+Hello {!PSQ__ApprovalRequest__c.OwnerFullName},<br>
+<br>
+You are receiving this email to notify you that the quote: "{!PSQ__ApprovalRequest__c.PrimaryQuoteName__c}", which you had submitted has been rejected for the following reason: <br>{!PSQ__ApprovalRequest__c.PSQ__RejectionReason__c}.<br>
+<br>
+Kind Regards,<br>
+<br>
+{!ApprovalRequest.Process_Approver}

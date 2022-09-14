@@ -1,0 +1,4 @@
+/* left align dialog headers */
+header.slds-modal__header {
+    text-align: left;    
+}

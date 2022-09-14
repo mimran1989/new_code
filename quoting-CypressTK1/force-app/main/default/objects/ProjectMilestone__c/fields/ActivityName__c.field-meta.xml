@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivityName__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISBLANK(ProjectPhase__c)),ProjectPhase__r.Name,
+IF( NOT(ISBLANK(QuoteSection__c)),QuoteSection__r.Name,
+IF( NOT(ISBLANK(QuotePeriodGroup__c)),QuotePeriodGroup__r.Name,
+IF( NOT(ISBLANK(QuotePeriod__c)),QuotePeriod__r.Name,&quot;N/A&quot;))))</formula>
+    <label>Activity Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

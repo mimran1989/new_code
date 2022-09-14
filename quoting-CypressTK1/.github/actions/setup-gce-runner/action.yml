@@ -1,0 +1,26 @@
+name: Setup GCE Runner
+runs:
+  using: 'composite'
+  steps:
+    - id: install-jq
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install -y jq
+    - id: install-node
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install curl -y
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+        nvm install 16
+        nvm use 16
+    - id: install-ci-tools
+      shell: bash
+      run: |
+        sudo npm install -g @salesforce/sfdx-lwc-jest jest @types/jest webpack@5.33.2

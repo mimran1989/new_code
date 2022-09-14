@@ -1,0 +1,43 @@
+name: Clean pull request flow
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  destroy-scratch-org:
+    runs-on: ubuntu-latest
+    name: Teardown scratch org
+    steps:
+      - uses: sfdx-actions/setup-sfdx@v1
+      - name: Destroy scratch org
+        id: destroy-scratch
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          artifactKey="${PR_NUMBER}-scratch"
+
+          SCRATCH_ARTIFACT=$(curl -s -H 'Accept: application/vnd.github.v3+json' \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/artifacts | jq  --arg artifactName "$artifactKey" '[.artifacts | sort_by(.created_at) | reverse[] | select(.name==$artifactName)][0]')
+          ARTIFACT_DOWNLOAD_URL=$(echo "$SCRATCH_ARTIFACT" | jq '.archive_download_url' | sed 's/\"//g')
+          ARTIFACT_URL=$(echo "$SCRATCH_ARTIFACT" | jq '.url' | sed 's/\"//g')
+
+          if [ "$ARTIFACT_DOWNLOAD_URL" != "" ] && [ "$ARTIFACT_DOWNLOAD_URL" != "null" ]; then                        
+            curl -sLJO -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "${ARTIFACT_DOWNLOAD_URL}"
+
+            unzip ${artifactKey}.zip
+            curl \
+            -X DELETE \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "${ARTIFACT_URL}"
+
+            echo "\$token" > hub-token
+            sed -i 's?$token?${{ env.HUB_TOKEN }}?g' hub-token
+            sfdx force:auth:sfdxurl:store -f hub-token -a dev-hub
+            sfdx force:auth:sfdxurl:store -f token -a test-org
+            sfdx force:org:delete -u test-org -v dev-hub
+          fi
+        env:
+          HUB_TOKEN: ${{ secrets.HUB_TOKEN }}

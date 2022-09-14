@@ -1,0 +1,12 @@
+<template>
+	<c-message-service
+		boundary="component-state"
+		onrenameaddon={handleRenameAddon}
+	></c-message-service>
+	<lightning-input
+		name="addon"
+		label={LABEL_RENAME_ADDON}
+		placeholder={LABEL_RENAME_ADDON}
+		required="true"
+	></lightning-input>
+</template>

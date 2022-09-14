@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AttributeOptionId__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Attribute Option</label>
+    <referenceTo>RateCardAttributeOption__c</referenceTo>
+    <relationshipLabel>Rate Card Items Attribute Options</relationshipLabel>
+    <relationshipName>RateCardItemAttributeOptions</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

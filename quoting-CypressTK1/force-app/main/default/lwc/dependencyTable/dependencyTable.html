@@ -1,0 +1,40 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<c-message-service boundary={uniqueBoundary}></c-message-service>
+	<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+		<thead>
+			<template for:each={columnLabels} for:item="columnLabel">
+				<th scope="col" key={columnLabel}>{columnLabel}</th>
+			</template>
+		</thead>
+		<tbody>
+			<template for:each={data} for:item="row">
+				<tr key={row.id}>
+					<td style="width: 21%">
+						<p>
+							<lightning-formatted-text
+								class="slds-text-heading_small"
+								value={row.label}
+							></lightning-formatted-text>
+						</p>
+					</td>
+					<template for:each={row.picklists} for:item="picklist">
+						<td key={picklist.id}>
+							<lightning-combobox
+								data-index={picklist.id}
+								placeholder={picklist.label}
+								value={picklist.value}
+								options={picklist.options}
+								onchange={handleChange}
+								variant="label-hidden"
+							></lightning-combobox>
+						</td>
+					</template>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+</template>

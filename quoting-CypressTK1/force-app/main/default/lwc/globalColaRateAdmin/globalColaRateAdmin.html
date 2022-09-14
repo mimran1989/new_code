@@ -1,0 +1,27 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<div class="slds-tabs_card slds-theme_default">
+		<div class="slds-grid slds-grid_align-end">
+			<div class="slds-col">
+				<lightning-button-group>
+					<lightning-button
+						label={LABEL_COPY_FROM_TO}
+						onclick={handleCopy}
+						disabled={isCopyDisabled}
+					></lightning-button>
+					<lightning-button label={LABEL_ADD_ROW} onclick={handleAddRow}></lightning-button>
+					<lightning-button label={LABEL_DELETE_ROW} onclick={handleDeleteRows}> </lightning-button>
+				</lightning-button-group>
+			</div>
+		</div>
+		<!-- Make sure datatable is a child of an element with class
+		slds-tabs_card parent, otherwise, there's a weird border that shows -->
+		<c-add-remove-table
+			editable-fields={editableFields}
+			after-cell-change={handleCellChange}
+		></c-add-remove-table>
+	</div>
+</template>

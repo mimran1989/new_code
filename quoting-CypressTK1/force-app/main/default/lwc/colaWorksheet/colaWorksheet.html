@@ -1,0 +1,24 @@
+<template>
+	<c-message-service
+		boundary="cola-adjustments"
+		onsavecolaadjustments={saveColaAdjustments}
+	></c-message-service>
+	<c-message-service class="quote-adjustments" boundary="quote-adjustments"></c-message-service>
+	<c-quote-totals quote-id={quoteId}></c-quote-totals>
+	<div if:true={isLoaded}>
+		<template if:false={hasCostsByYear} style="text-align: center; margin-bottom: 15px">
+			{errorMessage}
+		</template>
+		<template if:true={hasCostsByYear}>
+			{LABEL_COLA_RATE_OVERRIDE}
+			<lightning-datatable
+				data={data}
+				columns={columns}
+				key-field="year"
+				hide-checkbox-column="true"
+				min-column-width="50px"
+			>
+			</lightning-datatable>
+		</template>
+	</div>
+</template>

@@ -1,0 +1,131 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2021 Provus Inc. All rights reserved.
+  -->
+
+<template>
+	<c-message-service boundary="component-state"></c-message-service>
+	<div class="main">
+		<div if:false={hasExpired} class="container">
+			<div if:false={hasRoles} class="slds-text-align_center">{LABEL_ERROR_NO_AVAILABLE_ROLES}</div>
+			<lightning-combobox
+				if:true={hasRoles}
+				name="role"
+				class="role-select"
+				label={LABEL_SELECT_RESOURCE_ROLE}
+				value={_selectedRole}
+				placeholder={LABEL_SELECT_RESOURCE_ROLE}
+				options={roles}
+				onchange={handleRoleSelection}
+			></lightning-combobox>
+			<div
+				class="slds-p-around_medium lgc-bg filter-menu"
+				style="
+					position: relative;
+					top: 25px;
+					z-index: 1;
+					margin-bottom: -10px;
+					left: -16px;
+					padding-top: 0;
+				"
+			>
+				<lightning-button-icon
+					if:true={showSearchFilterIcon}
+					icon-name="utility:filterList"
+					alternative-text="Filter Rates"
+					title="Filter Rates"
+					onclick={handleToggleSearchFilters}
+				></lightning-button-icon>
+			</div>
+			<section
+				if:true={showSearchFilters}
+				aria-describedby="advanced-search-body"
+				aria-labelledby="advanced-search-header"
+				class="slds-popover slds-nubbin_top-left advanced-search-popover"
+				role="dialog"
+			>
+				<button
+					class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close"
+					title="Close dialog"
+				>
+					<svg class="slds-button__icon" aria-hidden="true">
+						<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+					</svg>
+					<span class="slds-assistive-text">Close dialog</span>
+				</button>
+				<div class="slds-popover__body" id="advanced-search-body">
+					<div>
+						<div>
+							<header class="slds-popover__header">
+								<h2 class="slds-text-heading_small" id="advanced-search-header">Advanced Search</h2>
+							</header>
+							<div class="slds-grid slds-wrap">
+								<div class="slds-col slds-size_12-of-12">
+									<template for:each={searchFilterAttributes} for:item="searchFilter">
+										<lightning-combobox
+											aria-labelledby={searchFilter.name}
+											key={searchFilter.name}
+											label={searchFilter.label}
+											value={searchFilter.value}
+											placeholder={searchFilter.placeholder}
+											options={searchFilter.options}
+											onchange={handleFilterChange}
+										></lightning-combobox
+									></template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer class="slds-popover__footer">
+					<div class="slds-grid slds-grid_vertical-align-center">
+						<button
+							class="slds-button slds-button_neutral slds-col_bump-left"
+							onclick={handleCloseFilters}
+						>
+							Cancel
+						</button>
+						<button
+							class="slds-button slds-button_brand slds-col_bump-left"
+							onclick={handleApplyFilters}
+							disabled={isApplyButtonDisabled}
+						>
+							Apply
+						</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+
+		<div if:true={hasExpired} class="slds-text-align_center">{LABEL_ERROR_RATECARD_EXPIRED}</div>
+		<c-soql-datatable
+			class={datatableClasses}
+			checkbox-type="single"
+			query-string={queryStr}
+			sorted-by={sortedBy}
+			sorted-direction="desc"
+			onrowselection={handleRateItemSelection}
+			preselected-rows={rateCardItemId}
+		></c-soql-datatable>
+		<div class="slds-modal__footer">
+			<lightning-button
+				if:true={showCancelButton}
+				class="slds-p-right_x-small"
+				variant="neutral"
+				label={LABEL_CANCEL}
+				onclick={handleCancel}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				label={LABEL_ADD_TO_QUOTE}
+				onclick={handleAddResource}
+				disabled={isAddButtonDisabled}
+			></lightning-button>
+			<lightning-button
+				if:true={disableContinueButton}
+				label={LABEL_CONTINUE}
+				onclick={handleContinue}
+			></lightning-button>
+		</div>
+	</div>
+</template>

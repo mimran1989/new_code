@@ -1,0 +1,11 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QuoteApprovalProcess__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Quote Approval Process Name</label>
+    <length>80</length>
+    <description>Default Approval Process Name for Provus Quote</description>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

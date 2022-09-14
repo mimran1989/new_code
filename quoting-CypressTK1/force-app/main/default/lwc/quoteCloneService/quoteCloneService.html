@@ -1,0 +1,33 @@
+<template>
+	<lightning-record-edit-form object-api-name={quoteObjectAPIName}>
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{title}</h2>
+		</header>
+		<div class="slds-modal__content slds-var-p-around_medium">
+			<div class="slds-p-around_medium lgc-bg">
+				<lightning-input
+					type="text"
+					label={Label.LABEL_QUOTE_NAME}
+					value={clonedQuoteName}
+					onchange={handleChange}
+					required="true"
+				></lightning-input>
+			</div>
+		</div>
+		<footer class="slds-modal__footer">
+			<lightning-button
+				variant="neutral"
+				label={Label.LABEL_CANCEL_BUTTON}
+				onclick={closeAction}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				label={Label.LABEL_CLONE_BUTTON}
+				type="submit"
+				class="slds-m-left_x-small"
+				onclick={cloneQuote}
+				disabled={disableButton}
+			></lightning-button>
+		</footer>
+	</lightning-record-edit-form>
+</template>

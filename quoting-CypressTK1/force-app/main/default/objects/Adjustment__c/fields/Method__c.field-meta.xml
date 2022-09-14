@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Method__c</fullName>
+    <externalId>false</externalId>
+    <label>Method</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Initial</fullName>
+                <default>false</default>
+                <label>Initial</label>
+            </value>
+            <value>
+                <fullName>Manual</fullName>
+                <default>false</default>
+                <label>Manual</label>
+            </value>
+            <value>
+                <fullName>Rule</fullName>
+                <default>false</default>
+                <label>Rule</label>
+            </value>
+            <value>
+                <fullName>Contingency</fullName>
+                <default>false</default>
+                <label>Contingency</label>
+            </value>
+            <value>
+                <fullName>Cola</fullName>
+                <default>false</default>
+                <label>Cola</label>
+            </value>
+            <value>
+                <fullName>Volume Discount</fullName>
+                <default>false</default>
+                <label>Volume Discount</label>
+            </value>
+            <value>
+                <fullName>Location Discount</fullName>
+                <default>false</default>
+                <label>Location Discount</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

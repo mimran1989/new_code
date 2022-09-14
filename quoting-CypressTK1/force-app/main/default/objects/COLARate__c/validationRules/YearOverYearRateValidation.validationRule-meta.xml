@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>YearOverYearRateValidation</fullName>
+    <active>true</active>
+    <description>Year Over Year Rate must be greater than 0.</description>
+    <errorConditionFormula
+	>IF( ISPICKVAL(RateSheetId__r.Type__c, &apos;Global&apos;) , YearOverYearRate__c &lt;= 0, YearOverYearRate__c &lt; 0)</errorConditionFormula>
+    <errorDisplayField>YearOverYearRate__c</errorDisplayField>
+    <errorMessage>Year Over Year Rate must be greater than 0.</errorMessage>
+</ValidationRule>

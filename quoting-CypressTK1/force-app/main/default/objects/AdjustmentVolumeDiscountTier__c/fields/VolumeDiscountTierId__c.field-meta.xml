@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VolumeDiscountTierId__c</fullName>
+    <description>Id of related volume discount tier record</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Id of related volume discount tier record</inlineHelpText>
+    <label>Volume Discount Tier Id</label>
+    <referenceTo>VolumeDiscountTier__c</referenceTo>
+    <relationshipLabel>Adjustment Volume Discount Tiers</relationshipLabel>
+    <relationshipName>AdjustmentVolumeDiscountTiers</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

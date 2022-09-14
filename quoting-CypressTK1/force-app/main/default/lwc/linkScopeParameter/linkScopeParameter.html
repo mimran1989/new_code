@@ -1,0 +1,22 @@
+<template>
+	<c-message-service class="dialog-service" boundary="component-state"></c-message-service>
+	<c-message-service
+		boundary={uniqueBoundary}
+		onlinkedscopeparameter={handleLinkedScopeParameter}
+	></c-message-service>
+	<button
+		class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+		title={LINK_BUTTON_LABEL}
+		onclick={handleOpenLinkDialog}
+	>
+		<svg class="slds-button__icon slds-icon-text-light" aria-hidden="true">
+			<template if:false={selectedScopeParameterId}>
+				<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#link"></use>
+			</template>
+			<template if:true={selectedScopeParameterId}>
+				<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#linked"></use>
+			</template>
+		</svg>
+		<span class="slds-assistive-text">{LINK_BUTTON_LABEL}</span>
+	</button>
+</template>

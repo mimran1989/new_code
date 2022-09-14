@@ -1,0 +1,102 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- integerTiers -->
+<template>
+	<c-message-service class="component-state" boundary="component-state"></c-message-service>
+	<c-message-service
+		class="parameter-value-dialog-state"
+		boundary="parameter-value-dialog-state"
+	></c-message-service>
+	<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+		<thead>
+			<tr class="slds-line-height_reset">
+				<th class="" scope="col">
+					<div class="slds-truncate" title={LABEL_SEQUENCE}>{LABEL_SEQUENCE}</div>
+				</th>
+				<th class="" scope="col">
+					<div class="slds-truncate" title={LABEL_FROM}>{LABEL_FROM}</div>
+				</th>
+				<th class="" scope="col">
+					<div class="slds-truncate" title={LABEL_TO}>{LABEL_TO}</div>
+				</th>
+				<th class="" scope="col">
+					<div class="slds-truncate" title=""></div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<template for:each={data} for:item="value" for:index="index">
+				<tr class="slds-hint-parent" key={value.sequence}>
+					<td>
+						<div class="slds-truncate">
+							<lightning-input
+								type="text"
+								required="true"
+								read-only="true"
+								variant="label-hidden"
+								value={value.sequence}
+							></lightning-input>
+						</div>
+					</td>
+					<td>
+						<div class="slds-truncate">
+							<lightning-input
+								type="number"
+								variant="label-hidden"
+								onblur={handleBlur}
+								readonly="true"
+								required="true"
+								data-index={index}
+								name="fromValue"
+								value={value.fromValue}
+							>
+							</lightning-input>
+						</div>
+					</td>
+					<td>
+						<div class="slds-truncate">
+							<lightning-input
+								type="number"
+								variant="label-hidden"
+								onblur={handleBlur}
+								required="true"
+								data-index={index}
+								name="toValue"
+								min={value.fromValue}
+								value={value.toValue}
+							></lightning-input>
+						</div>
+					</td>
+					<td class="slds-size_4-of-10">
+						<div>
+							<lightning-button-icon
+								icon-name="utility:add"
+								onclick={handleAddRow}
+								variant="brand"
+								alternative-text={LABEL_ADD_ROW}
+								class="slds-m-left_xx-small"
+								title={LABEL_ADD_ROW}
+								data-index={index}
+							>
+							</lightning-button-icon>
+							<lightning-button-icon
+								data-index={index}
+								icon-name="utility:delete"
+								onclick={handleRemoveRow}
+								variant="brand"
+								alternative-text={LABEL_DELETE_ROW}
+								class="slds-m-left_xx-small"
+								title={LABEL_DELETE_ROW}
+								disabled={isRemoveDisabled}
+							>
+							</lightning-button-icon>
+						</div>
+					</td>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+</template>

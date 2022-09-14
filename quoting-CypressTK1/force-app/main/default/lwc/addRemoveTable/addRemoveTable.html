@@ -1,0 +1,18 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Add Remove Table -->
+<template>
+	<c-base-datatable
+		editable-fields={editableFields}
+		unique-boundary="component-state"
+		key-field="index"
+		onrowselection={handleRowSelect}
+		cell-change-callback={afterCellChange}
+		checkbox-type="multi"
+		use-load-style-hack-for-overflow="true"
+		suppress-bottom-bar="true"
+	></c-base-datatable>
+</template>

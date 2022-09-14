@@ -1,0 +1,12 @@
+/**
+ *  Provus Services Quoting
+ *  provusCombobox
+ *  @2022 Provus Inc. All rights reserved.
+ */
+.combobox-list-above .slds-listbox {
+    position: fixed;
+    left: auto;
+    top: auto;
+    width: auto;
+    margin-top: 33px;
+}

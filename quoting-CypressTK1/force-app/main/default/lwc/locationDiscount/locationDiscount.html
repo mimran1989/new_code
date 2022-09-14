@@ -1,0 +1,17 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Location Discount -->
+<template>
+	<div class="slds-grid slds-grid_align-end">
+		<div class="slds-col">
+			<lightning-button-group>
+				<lightning-button label={LABEL_ADD_ROW} onclick={handleAddRow}></lightning-button>
+				<lightning-button label={LABEL_DELETE_ROW} onclick={handleDeleteRows}> </lightning-button>
+			</lightning-button-group>
+		</div>
+	</div>
+	<c-add-remove-table editable-fields={editableFields}></c-add-remove-table>
+</template>

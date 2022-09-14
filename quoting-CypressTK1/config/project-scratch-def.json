@@ -1,0 +1,13 @@
+{
+	"orgName": "Provus Services Quoting",
+	"edition": "Developer",
+	"features": ["MultiCurrency", "PlatformCache", "DebugApex"],
+	"settings": {
+		"lightningExperienceSettings": {
+			"enableS1DesktopEnabled": true
+		},
+		"mobileSettings": {
+			"enableS1EncryptedStoragePref2": false
+		}
+	}
+}

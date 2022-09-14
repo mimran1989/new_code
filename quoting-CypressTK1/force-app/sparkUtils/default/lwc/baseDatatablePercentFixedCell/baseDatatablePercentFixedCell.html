@@ -1,0 +1,21 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+  <c-base-datatable-editable-cell
+    table-boundary={tableBoundary}
+    original-value={value}
+    display-cell-value-prop="value"
+    edit-cell-value-prop="value"
+    is-editable={isEditable}
+    row-key-attribute={rowKeyAttribute}
+    row-key-value={rowKeyValue}
+    object-api-name={objectApiName}
+    column-name={columnName}
+    field-api-name={fieldApiName}
+  >
+    <lightning-formatted-number slot="displayCell" format-style="percent-fixed" value={value} maximum-fraction-digits={maximumFractionDigits}></lightning-formatted-number>
+    <lightning-input slot="editCell" variant="label-hidden" value={value} type="number"></lightning-input>
+  </c-base-datatable-editable-cell>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateHoursInAMonthDoesntExceedYears</fullName>
+    <active>true</active>
+    <description
+	>The number of hours in a month does not exceed the number of hours in a year</description>
+    <errorConditionFormula>StandardMonthHours__c  &gt;  StandardYearHours__c</errorConditionFormula>
+    <errorMessage
+	>The number of hours in a month should not exceed the number of hours in a year.</errorMessage>
+</ValidationRule>

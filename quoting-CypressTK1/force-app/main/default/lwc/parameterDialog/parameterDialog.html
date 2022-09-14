@@ -1,0 +1,174 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Parameter Dialog -->
+<template>
+	<c-message-service
+		class="component-state"
+		boundary="component-state"
+		onupdateparamvalues={handleUpdateParamValues}
+		onupdatedata={handleUpdateData}
+	></c-message-service>
+	<c-message-service
+		class="parameter-value-dialog-state"
+		boundary="parameter-value-dialog-state"
+	></c-message-service>
+	<div class="slds-modal__content slds-p-around_medium">
+		<table
+			class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-box slds-max-medium-table_stacked-horizontal"
+		>
+			<thead>
+				<tr>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_SEQUENCE}</div>
+					</th>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_NAME}</div>
+					</th>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_HASHTAG}</div>
+					</th>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_GUIDANCE}</div>
+					</th>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_DATA_TYPE}</div>
+					</th>
+					<th scope="col"></th>
+					<th class="slds-is-resizable" scope="col">
+						<div class="slds-truncate">{LABEL_ACTIONS}</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody class="row_drag">
+				<template for:each={data} for:item="param" for:index="index">
+					<tr key={param.sequence} id={param.sequence} class="slds-hint-parent">
+						<td data-label={LABEL_SEQUENCE}>
+							<div class="slds-truncate" title={LABEL_SEQUENCE}>
+								<lightning-input
+									data-id={param.sequence}
+									label={LABEL_NAME}
+									value={param.sequence}
+									variant="label-hidden"
+									onblur={handleBlur}
+									read-only="true"
+								></lightning-input>
+							</div>
+						</td>
+						<td data-label={LABEL_NAME}>
+							<div title={LABEL_NAME}>
+								<lightning-input
+									data-id={param.sequence}
+									data-index={index}
+									name="name"
+									label={LABEL_NAME}
+									required
+									value={param.name}
+									variant="label-hidden"
+									onblur={handleBlur}
+								>
+								</lightning-input>
+							</div>
+						</td>
+						<td data-label={LABEL_HASHTAG}>
+							<div title={LABEL_HASHTAG}>
+								<lightning-input
+									data-id={param.sequence}
+									data-index={index}
+									name="developerName"
+									label={LABEL_HASHTAG}
+									required
+									value={param.developerName}
+									variant="label-hidden"
+									onblur={handleBlur}
+									placeholder={LABEL_HASHTAG_EXAMPLE}
+									pattern="#\w+"
+								>
+								</lightning-input>
+							</div>
+						</td>
+						<td data-label={LABEL_GUIDANCE}>
+							<div title={LABEL_GUIDANCE}>
+								<lightning-input
+									data-id={param.sequence}
+									data-index={index}
+									name="guidance"
+									label={LABEL_GUIDANCE}
+									value={param.guidance}
+									variant="label-hidden"
+									onblur={handleBlur}
+								></lightning-input>
+							</div>
+						</td>
+						<td data-label={LABEL_DATA_TYPE}>
+							<template if:true={picklistValues.data}>
+								<div title={LABEL_DATA_TYPE}>
+									<lightning-combobox
+										name="dataType"
+										data-id={param.sequence}
+										data-index={index}
+										value={param.dataType}
+										placeholder={LABEL_SELECT_DATA_TYPE}
+										options={picklistValues.data.values}
+										variant="label-hidden"
+										onchange={handleBlur}
+										required="true"
+									></lightning-combobox>
+								</div>
+							</template>
+						</td>
+						<td data-label={LABEL_ADD_VALUES}>
+							<div title={LABEL_ADD_VALUES}>
+								<template if:true={param.valuesEditable}>
+									<template if:false={param.paramValues}>
+										<lightning-button
+											label={LABEL_ADD_VALUES}
+											data-index={index}
+											onclick={handleAddValues}
+										></lightning-button>
+									</template>
+									<template if:true={param.paramValues}>
+										<lightning-button
+											label={LABEL_SHOW_VALUES}
+											data-index={index}
+											onclick={handleAddValues}
+										></lightning-button>
+									</template>
+								</template>
+							</div>
+						</td>
+						<td data-label={LABEL_ACTIONS}>
+							<div title={LABEL_ACTIONS}>
+								<lightning-button-icon
+									icon-name="utility:add"
+									data-id={param.sequence}
+									data-index={index}
+									onclick={handleAddRow}
+									variant="brand"
+									alternative-text={LABEL_ADD_ROW}
+									class="slds-m-left_xx-small"
+									title={LABEL_ADD_ROW}
+								>
+								</lightning-button-icon>
+								<lightning-button-icon
+									icon-name="utility:delete"
+									data-id={param.sequence}
+									data-index={index}
+									onclick={handleRemoveRow}
+									variant="brand"
+									alternative-text={LABEL_DELETE_ROW}
+									class="slds-m-left_xx-small"
+									title={LABEL_DELETE_ROW}
+									disabled={isRemoveDisabled}
+								>
+								</lightning-button-icon>
+							</div>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</div>
+</template>

@@ -1,0 +1,67 @@
+<template>
+	<lightning-record-edit-form object-api-name={objectAPIName}>
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{title}</h2>
+		</header>
+		<div class="slds-modal__content slds-var-p-around_medium ratecard-dialog">
+			<div class="slds-grid slds-wrap">
+				<div class="slds-col slds-size_1-of-2 slds-form-element_stacked">
+					<lightning-input
+						label={labelRateCardName}
+						name="rateCardName"
+						value={rateCardName}
+						data-field="rateCardName"
+						required="true"
+						onchange={handleChange}
+					></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-2 slds-form-element_stacked">
+					<lightning-combobox
+						name="duplicateStrategy"
+						label={labelDuplicateStrategy}
+						value={duplicateStrategy}
+						placeholder="Select Strategy"
+						options={duplicateStrategyOptions}
+						onchange={handleChange}
+					></lightning-combobox>
+				</div>
+				<div class="slds-col slds-size_1-of-2 slds-form-element_stacked">
+					<lightning-input
+						label={labelEffectiveDate}
+						value={effectiveDate}
+						type="date"
+						name="effectiveDate"
+						data-field="effectiveDate"
+						required="true"
+						onchange={handleChange}
+					></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-2 slds-form-element_stacked">
+					<lightning-input
+						label={labelExpirationDate}
+						value={expirationDate}
+						type="date"
+						name="expirationDate"
+						data-field="expirationDate"
+						required="true"
+						onchange={handleChange}
+					></lightning-input>
+				</div>
+			</div>
+		</div>
+		<footer class="slds-modal__footer">
+			<lightning-button
+				variant="neutral"
+				label={labelCancel}
+				onclick={handleCancel}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				label={labelCreate}
+				type="submit"
+				onclick={handleSave}
+				disabled={disableButton}
+			></lightning-button>
+		</footer>
+	</lightning-record-edit-form>
+</template>

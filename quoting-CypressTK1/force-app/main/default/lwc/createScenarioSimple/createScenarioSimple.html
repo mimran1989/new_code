@@ -1,0 +1,34 @@
+<template>
+	<c-message-service data-id="cs-msg-service" boundary="component-state"></c-message-service>
+	<div style="display: none">{recordId}</div>
+	<div class="slds-theme_default">
+		<lightning-quick-action-panel title="Create Scenario">
+			<header class="slds-modal__header">
+				<h2 class="slds-modal__title slds-hyphenate">Create Scenario</h2>
+			</header>
+			<lightning-input
+				type="text"
+				name="Scenario Name"
+				label="Scenario Name"
+				value={scenarioName}
+				onchange={scenarioNameUpdate}
+				class="scenario-name"
+				required
+			></lightning-input>
+		</lightning-quick-action-panel>
+		<div class="slds-modal__footer">
+			<lightning-button
+				class="slds-p-right_x-small"
+				variant="neutral"
+				label="Cancel"
+				onclick={closeAction}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				disabled={isActionDisabled}
+				label="Create"
+				onclick={createScenario}
+			></lightning-button>
+		</div>
+	</div>
+</template>

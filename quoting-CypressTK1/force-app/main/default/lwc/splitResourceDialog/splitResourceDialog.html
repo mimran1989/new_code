@@ -1,0 +1,33 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<c-message-service boundary={uniqueBoundary} onsplit={handleSplit}></c-message-service>
+	<div class="slds-modal__content slds-p-around_medium">
+		<lightning-input
+			label={LABEL_SPLIT_INPUT_MESSAGE}
+			class="split-input"
+			value={data.length}
+			onchange={handleChange}
+			type="number"
+			min="2"
+		></lightning-input>
+	</div>
+	<div class="slds-modal__content slds-p-around_medium">
+		<div style="height: 300px">
+			<lightning-datatable
+				key-field="name"
+				data={data}
+				columns={columns}
+				suppress-bottom-bar="true"
+				hide-checkbox-column="true"
+				oncellchange={handleCellChange}
+			>
+			</lightning-datatable>
+		</div>
+		<template if:true={error}>
+			<div class="slds-text-color_destructive">{LABEL_SPLIT_PERCENTAGE_ERROR}</div>
+		</template>
+	</div>
+</template>

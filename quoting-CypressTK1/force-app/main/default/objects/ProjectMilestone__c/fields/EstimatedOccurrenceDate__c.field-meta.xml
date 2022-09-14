@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EstimatedOccurrenceDate__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISBLANK(Offset__c)),
+CASE(OffsetUnit__c ,
+&quot;Days&quot;,  ActivityDate__c +  Offset__c ,
+&quot;Weeks&quot;, ActivityDate__c + (Offset__c * 7),
+&quot;Months&quot;, ADDMONTHS(ActivityDate__c, Offset__c) ,
+&quot;Quarters&quot;, ADDMONTHS(ActivityDate__c, (Offset__c * 3)),
+&quot;Years&quot;, ADDMONTHS(ActivityDate__c, (Offset__c * 12)),
+ActivityDate__c),
+ActivityDate__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Estimated Occurrence Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

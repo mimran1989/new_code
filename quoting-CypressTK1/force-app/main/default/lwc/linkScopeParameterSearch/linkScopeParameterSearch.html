@@ -1,0 +1,11 @@
+<template>
+	<c-message-service boundary={uniqueBoundary}></c-message-service>
+	<c-soql-datatable
+		show-search="true"
+		checkbox-type="Single"
+		object-api-name={objectApiName}
+		onrowselection={handleSelection}
+		preselected-rows={selectedRows}
+	>
+	</c-soql-datatable>
+</template>

@@ -1,0 +1,26 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<div style="display: none">{recordId}</div>
+	<c-message-service class="component-state" boundary="component-state"></c-message-service>
+	<c-message-service class="quote-adjustments" boundary="quote-adjustments"></c-message-service>
+	<div class="slds-grid slds-grid_align-end">
+		<div class="slds-col">
+			<lightning-button-group>
+				<lightning-button label={labels.LABEL_ADD_ROW} onclick={handleAddRow}></lightning-button>
+				<lightning-button
+					label={labels.LABEL_DELETE_ROW}
+					onclick={handleDeleteRows}
+				></lightning-button>
+			</lightning-button-group>
+		</div>
+	</div>
+	<div style="overflow: hidden">
+		<c-add-remove-table
+			editable-fields={editableFields}
+			after-cell-change={handleCellChange}
+		></c-add-remove-table>
+	</div>
+</template>

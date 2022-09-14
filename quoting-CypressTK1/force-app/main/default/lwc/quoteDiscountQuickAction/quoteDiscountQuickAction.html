@@ -1,0 +1,19 @@
+<template>
+	<c-message-service boundary="component-state"></c-message-service>
+	<template if:true={recordId}>
+		<div class="quote-discount">
+			<lightning-quick-action-panel header="Quote Discount">
+				<c-quote-discounting record-id={recordId}></c-quote-discounting>
+				<div slot="footer">
+					<lightning-button
+						variant="neutral"
+						label="Cancel"
+						class="slds-p-right_x-small"
+						onclick={closeDialog}
+					></lightning-button>
+					<lightning-button variant="brand" label="Save" onclick={saveAndClose}></lightning-button>
+				</div>
+			</lightning-quick-action-panel>
+		</div>
+	</template>
+</template>

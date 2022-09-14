@@ -1,0 +1,77 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<c-message-service
+		boundary="component-state"
+		onresourceupdate={handleResourceUpdate}
+	></c-message-service>
+	<c-estimate-scope-discovery if:true={isComponentShown}></c-estimate-scope-discovery>
+	<div class="slds-grid slds-grid_align-spread">
+		<div class="slds-col">
+			<span onclick={showActivityGroups}>
+				<lightning-icon
+					size="small"
+					icon-name="standard:work_type_group"
+					class="slds-m-left_xx-small"
+					title="Show Activity Group"
+				></lightning-icon
+			></span>
+			<span onclick={showActivities}>
+				<lightning-icon
+					size="small"
+					icon-name="standard:work_type"
+					class="slds-m-left_xx-small"
+					title="Show Activities"
+				></lightning-icon
+			></span>
+			<span onclick={showTasks}>
+				<lightning-icon
+					size="small"
+					icon-name="standard:task"
+					class="slds-m-left_xx-small"
+					title="Show Tasks"
+				></lightning-icon
+			></span>
+		</div>
+		<div class="slds-col slds-m-bottom_small">
+			<lightning-button
+				label="Resource Summary"
+				variant="brand"
+				icon-name="utility:summarydetail"
+				class="slds-m-left_xx-small"
+				onclick={openEstimateResourceSummary}
+			></lightning-button>
+			<lightning-button
+				label="Scope Summary"
+				variant="brand"
+				class="slds-m-left_xx-small"
+				onclick={openScopeSummary}
+			></lightning-button>
+			<lightning-button
+				if:true={scopeParametersExists}
+				label="Scope Discovery"
+				variant="brand"
+				class="slds-m-left_xx-small"
+				onclick={openScopeDiscovery}
+			></lightning-button>
+			<lightning-button
+				if:true={showSyncButton}
+				label="Sync to quote"
+				variant="brand"
+				class="slds-m-left_xx-small"
+				onclick={handleQuickSync}
+			></lightning-button>
+		</div>
+	</div>
+	<lightning-tree-grid
+		key-field="id"
+		data={data}
+		columns={columns}
+		hide-checkbox-column="false"
+		expanded-rows={expandedRowIds}
+		onrowaction={handleRowAction}
+	>
+	</lightning-tree-grid>
+</template>

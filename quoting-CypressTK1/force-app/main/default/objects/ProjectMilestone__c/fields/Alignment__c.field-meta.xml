@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alignment__c</fullName>
+    <externalId>false</externalId>
+    <label>Alignment</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Start of Project</fullName>
+                <default>false</default>
+                <label>Start of Project</label>
+            </value>
+            <value>
+                <fullName>End of Project</fullName>
+                <default>false</default>
+                <label>End of Project</label>
+            </value>
+            <value>
+                <fullName>Start of Phase</fullName>
+                <default>false</default>
+                <label>Start of Phase</label>
+            </value>
+            <value>
+                <fullName>End of Phase</fullName>
+                <default>false</default>
+                <label>End of Phase</label>
+            </value>
+            <value>
+                <fullName>Start of Section</fullName>
+                <default>false</default>
+                <label>Start of Section</label>
+            </value>
+            <value>
+                <fullName>End of Section</fullName>
+                <default>false</default>
+                <label>End of Section</label>
+            </value>
+            <value>
+                <fullName>Start of Period Group</fullName>
+                <default>false</default>
+                <label>Start of Period Group</label>
+            </value>
+            <value>
+                <fullName>End of Period Group</fullName>
+                <default>false</default>
+                <label>End of Period Group</label>
+            </value>
+            <value>
+                <fullName>Start of Period</fullName>
+                <default>false</default>
+                <label>Start of Period</label>
+            </value>
+            <value>
+                <fullName>End of Period</fullName>
+                <default>false</default>
+                <label>End of Period</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

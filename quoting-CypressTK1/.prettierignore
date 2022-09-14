@@ -1,0 +1,33 @@
+# List files or directories below to ignore them when running prettier
+# More information: https://prettier.io/docs/en/ignore.html
+#
+
+# handled by eslint
+*.js
+*.ts
+
+**/staticresources/**
+.localdevserver
+.sfdx
+.vscode
+
+coverage/
+ui/coverage
+
+docs/CHANGELOG.md
+sfdx-project.json
+
+# MacOS system files
+**/default/**/*.DS_Store
+
+# node files
+**/node_modules/**
+
+# ignore the static resources folder
+**/staticresources/**
+
+# ignore the lwc-utils utils library
+**/sparkUtils/**
+
+# ignore the metadata service wsdl
+**/metadataAPI/default/classes/MetadataService.cls

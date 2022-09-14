@@ -1,0 +1,13 @@
+<template>
+	<c-message-service boundary="component-state"></c-message-service>
+	<div class="slds-theme_default">
+		<lightning-input
+			type="text"
+			name="templateName"
+			label={Label.templateName}
+			value={templateName}
+			onchange={templateNameChange}
+			required="true"
+		></lightning-input>
+	</div>
+</template>

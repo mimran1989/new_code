@@ -1,0 +1,11 @@
+<template>
+	<c-quote-service quote={quoteRecordId}></c-quote-service>
+	<c-quote-totals quote-id={quoteRecordId} class="quote-totals"></c-quote-totals>
+	<c-provus-grid onload={initGrid}></c-provus-grid>
+	<c-message-service
+		class="component-state"
+		boundary="component-state"
+		onupdateaddon={handleUpdateAddon}
+		ondeselect={handleDeselect}
+	></c-message-service>
+</template>

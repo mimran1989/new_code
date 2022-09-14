@@ -1,0 +1,22 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<c-message-service boundary="resource-defaults" onchange={handleChange}></c-message-service>
+	<template if:true={recordId}>
+		<template if:true={rendered}>
+			<div class="slds-p-around_medium" style="padding-top: 5px">
+				<c-dependency-table
+					row-label-field={FIELD_RESOURCE_ROLE_NAME}
+					row-id-field={FIELD_RESOURCE_ROLE}
+					unique-boundary="resource-defaults"
+					table-data={tableData}
+					table-columns={tableColumns}
+					dependency-tree={dependencyTree}
+				>
+				</c-dependency-table>
+			</div>
+		</template>
+	</template>
+</template>

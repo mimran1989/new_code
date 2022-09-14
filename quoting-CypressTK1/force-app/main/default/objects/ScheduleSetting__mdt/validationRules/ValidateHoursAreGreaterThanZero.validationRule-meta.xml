@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateHoursAreGreaterThanZero</fullName>
+    <active>true</active>
+    <description>The number of hours for any time unit is greater than zero</description>
+    <errorConditionFormula>OR( 
+(StandardDayHours__c  &lt;= 0),
+(StandardWeekHours__c &lt;= 0),
+(StandardMonthHours__c &lt;= 0),
+(StandardYearHours__c &lt;= 0)
+)</errorConditionFormula>
+    <errorMessage
+	>The number of hours for any time unit value must be greater than zero</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description
+	>This update includes changes to recalculate pricing for adjustments in expected order.</description>
+    <isLicensed>false</isLicensed>
+    <protected>false</protected>
+    <label>Enable Pricing Beta</label>
+</CustomPermission>

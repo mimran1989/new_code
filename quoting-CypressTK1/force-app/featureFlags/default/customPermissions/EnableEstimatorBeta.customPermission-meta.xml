@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isLicensed>false</isLicensed>
+    <protected>false</protected>
+    <label>Enable Estimator Beta</label>
+    <description>Enable usage of improved Estimator</description>
+</CustomPermission>

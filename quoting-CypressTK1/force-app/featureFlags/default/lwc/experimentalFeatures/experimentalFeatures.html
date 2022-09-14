@@ -1,0 +1,61 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<template>
+	<div if:false={isExperimentalFeaturesEnabled}>
+		<div>
+			<div class="slds-box slds-box_small" style="background-color: white">
+				<div class="slds-text-heading_large">Enable experimental features</div>
+			</div>
+			<div class="slds-card">
+				<br /><br />
+				<div class="slds-text-title" style="padding-left: 10px">
+					Please contact Provus Support to enable experimental features in this ORG.
+				</div>
+				<br /><br />
+			</div>
+		</div>
+	</div>
+	<div if:true={isExperimentalFeaturesEnabled}>
+		<div>
+			<lightning-button
+				variant="brand"
+				label="Save settings"
+				title="Save settings"
+				onclick={handleSave}
+			></lightning-button>
+			<br />
+			<br />
+			<div>
+				<div class="slds-box slds-box_small" style="background-color: white">
+					<div class="slds-text-heading_large">Enabled features</div>
+				</div>
+				<div class="slds-card">
+					<lightning-datatable
+						key-field="id"
+						data={experimentalFeatures}
+						columns={expirementalFeaturesColumns}
+						selected-rows={selectedFeatures}
+					>
+					</lightning-datatable>
+				</div>
+				<br />
+				<br />
+				<div class="slds-box slds-box_small" style="background-color: white">
+					<div class="slds-text-heading_large">Enabled users</div>
+				</div>
+				<div class="slds-card">
+					<lightning-dual-listbox
+						source-label="Available"
+						selected-label="Selected"
+						options={userList}
+						value={selectedUserList}
+						onchange={handleUserSelection}
+					></lightning-dual-listbox>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

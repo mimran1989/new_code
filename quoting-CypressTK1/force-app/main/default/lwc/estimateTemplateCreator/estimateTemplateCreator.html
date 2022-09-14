@@ -1,0 +1,709 @@
+<template>
+	<c-message-service
+		boundary="component-state"
+		onupdatehashtagsdata={handleUpdateHashtagsData}
+	></c-message-service>
+	<c-scope-parameter-dialog></c-scope-parameter-dialog>
+	<c-event-listener channel={channel} handler={onMessage}></c-event-listener>
+	<c-formula-evaluator></c-formula-evaluator>
+	<!--Actions panels on the Top Start-->
+	<div class="slds-grid slds-gutters">
+		<!--Maximize/Minimize Buttons Start-->
+		<div class="slds-col slds-size_2-of-3">
+			<span class="slds-m-left_large">
+				<template if:true={estimateTemplateVM.hasActivityGroups}>
+					<span if:true={togglePhase} onclick={showPhase}>
+						<lightning-icon
+							size="small"
+							icon-name="standard:event"
+							alternative-text={label.ShowProjectPhase}
+							class="slds-m-left_xx-small"
+							title={label.ShowProjectPhase}
+						>
+						</lightning-icon>
+					</span>
+
+					<span onclick={showAG}>
+						<lightning-icon
+							size="small"
+							icon-name="standard:work_type_group"
+							alternative-text={label.ShowActivityGroup}
+							class="slds-m-left_xx-small"
+							title={label.ShowActivityGroup}
+						>
+						</lightning-icon>
+					</span>
+					<span onclick={showActivity}>
+						<lightning-icon
+							size="small"
+							icon-name="standard:work_type"
+							alternative-text={label.ShowActivities}
+							class="slds-m-left_xx-small"
+							title={label.ShowActivities}
+						>
+						</lightning-icon>
+					</span>
+					<span onclick={showTasks}>
+						<lightning-icon
+							size="small"
+							icon-name="standard:task"
+							alternative-text={label.ShowTasks}
+							class="slds-m-left_xx-small"
+							title={label.ShowTasks}
+						>
+						</lightning-icon>
+					</span>
+				</template>
+			</span>
+			<template if:true={toggleactivityGroup}>
+				<lightning-button
+					label={label.CreateEditActivityGroups}
+					variant="brand"
+					class="slds-p-around_medium"
+					onclick={createActivityGroups}
+				>
+				</lightning-button>
+			</template>
+			<template if:true={togglePhase}>
+				<lightning-button
+					label={label.CreateEditPhase}
+					variant="brand"
+					class="slds-p-around_medium"
+					onclick={createEditProjectPhase}
+				>
+				</lightning-button>
+			</template>
+		</div>
+		<!--Maximize/Minimize Buttons-->
+		<div class="slds-col slds-size_1-of-3">
+			<span> </span>
+		</div>
+		<!--Maximize/Minimize Buttons End-->
+	</div>
+	<!--Actions panels on the Top End-->
+	<template if:true={estimateTemplateVM.hasActivityGroups}>
+		<br />
+		<lightning-tree-grid
+			data={estimateTemplateVM.tree}
+			columns={columns}
+			key-field="ActivityGroupId"
+			hide-checkbox-column="true"
+			onrowaction={handleRowAction}
+			expanded-rows={estimateTemplateVM.gridExpandedRows}
+		></lightning-tree-grid>
+	</template>
+
+	<!-- modal start -->
+	<template if:true={displayAg}>
+		<section
+			role="dialog"
+			tabindex="-1"
+			aria-labelledby="modal-heading-01"
+			aria-modal="true"
+			aria-describedby="modal-content-id-1"
+			class="slds-modal slds-fade-in-open"
+		>
+			<div class="slds-modal__container">
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button
+						class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close"
+						onclick={closeModal}
+					>
+						<lightning-icon
+							icon-name="utility:close"
+							alternative-text="close"
+							variant="inverse"
+							size="small"
+						>
+						</lightning-icon>
+						<span class="slds-assistive-text">{label.CloseButton}</span>
+					</button>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+						<div class="slds-text-color_default">{modalHeader}</div>
+					</h2>
+				</header>
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<template if:true={showParamPopUp}>
+						<!-- Modal/Popup Box LWC starts here -->
+						<section
+							role="dialog"
+							tabindex="-1"
+							aria-labelledby="modal-heading-01"
+							aria-modal="true"
+							aria-describedby="modal-content-id-1"
+							class="slds-modal slds-fade-in-open"
+						>
+							<div class="slds-modal__container">
+								<!-- Modal/Popup Box LWC header here -->
+								<header class="slds-modal__header">
+									<button
+										class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+										title="Close"
+										onclick={closeParamPopup}
+									>
+										<lightning-icon
+											icon-name="utility:close"
+											alternative-text="close"
+											variant="inverse"
+											size="small"
+										>
+										</lightning-icon>
+										<span class="slds-assistive-text">Close</span>
+									</button>
+									<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">
+										{paramHeader}
+									</h2>
+								</header>
+								<!-- Modal/Popup Box LWC body starts here -->
+								<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+									<!--Checkbox-->
+									<template if:true={paramsData.isCheckbox}>
+										<template if:true={paramsData.paramValues}>
+											<template for:each={paramsData.paramValues} for:item="rec">
+												<lightning-input
+													onchange={handleTaskParamsValueChange}
+													type="number"
+													key={rec.Id}
+													data-id={rec.Id}
+													data-field={paramFields.PerUnitDuration_field}
+													label="Checked"
+													value={rec.PerUnitDuration_field}
+													required="true"
+													step="any"
+													min="0"
+												>
+												</lightning-input>
+											</template>
+										</template>
+									</template>
+									<!--Picklist-->
+									<template if:true={paramsData.isPicklist}>
+										<table
+											class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+											aria-label="Example table of Opportunities with striped rows"
+										>
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Opportunity Name">Sequence</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Account Name">Label</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Close Date">Multiplier Value</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Close Date"></div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template if:true={paramsData.paramValues}>
+													<template for:each={paramsData.paramValues} for:item="record">
+														<tr class="slds-hint-parent" key={record.Id}>
+															<td data-label="Account Name">
+																<div class="slds-truncate" title="Cloudhub">
+																	<lightning-input
+																		data-field={paramFields.Sequence_field}
+																		data-id={record.Id}
+																		onchange={handleTaskParamsValueChange}
+																		read-only={paramsData.isLinked}
+																		type="text"
+																		value={record.Sequence_field}
+																		variant="label-hidden"
+																	>
+																	</lightning-input>
+																</div>
+															</td>
+															<td data-label="Close Date">
+																<div class="slds-truncate" title="4/14/2015">
+																	<lightning-input
+																		data-field={paramFields.Label_field}
+																		data-id={record.Id}
+																		onchange={handleTaskParamsValueChange}
+																		read-only={paramsData.isLinked}
+																		type="text"
+																		value={record.Label_field}
+																		variant="label-hidden"
+																	></lightning-input>
+																</div>
+															</td>
+															<td data-label="Prospecting">
+																<lightning-input
+																	type="number"
+																	variant="label-hidden"
+																	onchange={handleTaskParamsValueChange}
+																	data-id={record.Id}
+																	data-field={paramFields.PerUnitDuration_field}
+																	value={record.PerUnitDuration_field}
+																	required="true"
+																	step="any"
+																	min="0"
+																>
+																</lightning-input>
+															</td>
+															<td class="slds-size_4-of-10" data-label="Prospecting">
+																<div title="Prospecting">
+																	<lightning-button-icon
+																		icon-name="utility:add"
+																		data-id={record.Id}
+																		data-type="Add"
+																		onclick={addPicklistValueRow}
+																		variant="brand"
+																		alternative-text="Add user"
+																		class="slds-m-left_xx-small"
+																		title="Add user"
+																		hidden={paramsData.isLinked}
+																	>
+																	</lightning-button-icon>
+																	<lightning-button-icon
+																		icon-name="utility:delete"
+																		data-id={record.Id}
+																		data-type="Remove"
+																		onclick={removePicklistValueRow}
+																		variant="brand"
+																		alternative-text="Delete"
+																		class="slds-m-left_xx-small"
+																		title="Delete"
+																		hidden={paramsData.isLinked}
+																	>
+																	</lightning-button-icon>
+																</div>
+															</td>
+														</tr>
+													</template>
+												</template>
+											</tbody>
+										</table>
+									</template>
+									<template if:true={paramsData.IntegerTiers}>
+										<table
+											class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+											aria-label="Example table of Opportunities with striped rows"
+										>
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Sequence">Sequence</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="From">From</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="To">To</div>
+													</th>
+													<th class="" scope="col">
+														<div class="slds-truncate" title="Recommended Duration">
+															Recommended Duration
+														</div>
+													</th>
+
+													<th class="" scope="col">
+														<div class="slds-truncate" title=""></div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template if:true={paramsData.paramValues}>
+													<template for:each={paramsData.paramValues} for:item="record">
+														<tr class="slds-hint-parent" key={record.Id}>
+															<td data-label="Account Name">
+																<div class="slds-truncate" title="Cloudhub">
+																	<lightning-input
+																		data-field={paramFields.Sequence_field}
+																		data-id={record.Id}
+																		onchange={handleTaskParamsValueChange}
+																		read-only={paramsData.isLinked}
+																		required="true"
+																		type="text"
+																		value={record.Sequence_field}
+																		variant="label-hidden"
+																	></lightning-input>
+																</div>
+															</td>
+															<td data-label="Close Date">
+																<div class="slds-truncate" title="4/14/2015">
+																	<lightning-input
+																		data-field={paramFields.Fromvalue_field}
+																		data-id={record.Id}
+																		onchange={handleTaskParamsValueChange}
+																		read-only="true"
+																		required="true"
+																		type="number"
+																		value={record.Fromvalue_field}
+																		variant="label-hidden"
+																	>
+																	</lightning-input>
+																</div>
+															</td>
+															<td data-label="Close Date">
+																<div class="slds-truncate" title="4/14/2015">
+																	<lightning-input
+																		data-field={paramFields.Tovalue_field}
+																		data-id={record.Id}
+																		onchange={handleTaskParamsValueChange}
+																		read-only={paramsData.isLinked}
+																		required="true"
+																		type="number"
+																		value={record.Tovalue_field}
+																		variant="label-hidden"
+																		min={record.minvalue}
+																	></lightning-input>
+																</div>
+															</td>
+															<td data-label="Prospecting">
+																<lightning-input
+																	type="number"
+																	variant="label-hidden"
+																	onchange={handleTaskParamsValueChange}
+																	data-id={record.Id}
+																	required="true"
+																	data-field={paramFields.PerUnitDuration_field}
+																	value={record.PerUnitDuration_field}
+																	step="any"
+																	min="0"
+																>
+																</lightning-input>
+															</td>
+
+															<td class="slds-size_4-of-10" data-label="Prospecting">
+																<div title="Prospecting">
+																	<lightning-button-icon
+																		icon-name="utility:add"
+																		data-id={record.Id}
+																		data-type="Add"
+																		onclick={addIntegerTierValueRow}
+																		variant="brand"
+																		alternative-text={label.AddRow}
+																		class="slds-m-left_xx-small"
+																		title={label.AddRow}
+																		hidden={paramsData.isLinked}
+																	>
+																	</lightning-button-icon>
+																	<lightning-button-icon
+																		icon-name="utility:delete"
+																		data-id={record.Id}
+																		data-type="Remove"
+																		onclick={removeIntegerTierValueRow}
+																		variant="brand"
+																		alternative-text="Delete"
+																		class="slds-m-left_xx-small"
+																		title="Delete"
+																		hidden={paramsData.isLinked}
+																	>
+																	</lightning-button-icon>
+																</div>
+															</td>
+														</tr>
+													</template>
+												</template>
+											</tbody>
+										</table>
+									</template>
+									<!--Integer-->
+									<template if:true={paramsData.isInteger}>
+										<template if:true={paramsData.paramValues}>
+											<template for:each={paramsData.paramValues} for:item="rec">
+												<template if:false={enableDurationFormula}>
+													<lightning-input
+														type="number"
+														key={rec.Id}
+														data-id={rec.Id}
+														onchange={handleTaskParamsValueChange}
+														data-field={paramFields.PerUnitDuration_field}
+														label={label.LABEL_PER_UNIT_DURATION}
+														value={rec.PerUnitDuration_field}
+														required="true"
+														step="any"
+														min="0"
+													>
+													</lightning-input>
+												</template>
+												<template if:true={enableDurationFormula}>
+													<lightning-input
+														key={rec.Id}
+														data-id={rec.Id}
+														onchange={handleTaskParamsValueChange}
+														data-field={paramFields.EstimatedDurationFormula_field}
+														label={label.LABEL_PER_UNIT_DURATION}
+														value={rec.EstimatedDurationFormula_field}
+														required="true"
+													>
+													</lightning-input>
+												</template>
+											</template>
+										</template>
+									</template>
+								</div>
+								<!-- Modal/Popup Box LWC footer starts here -->
+								<footer class="slds-modal__footer">
+									<button
+										class="slds-button slds-button_neutral"
+										onclick={closeParamPopup}
+										title={label.CancelButton}
+									>
+										{label.CancelButton}
+									</button>
+									<button
+										class="slds-button slds-button_brand"
+										onclick={saveParamValues}
+										title={label.SaveButton}
+									>
+										{label.SaveButton}
+									</button>
+								</footer>
+							</div>
+						</section>
+						<div class="slds-backdrop slds-backdrop_open"></div>
+					</template>
+					<div class="container" lwc:dom="manual"></div>
+					<div class="slds-p-around_x-small">
+						<table
+							class="slds-table slds-table_cell-buffer slds-table_bordered slds-table--fixed-layout slds-box slds-max-medium-table--stacked-horizontal"
+						>
+							<thead>
+								<tr>
+									<th class="slds-is-resizable" scope="col">
+										<div class="slds-truncate" title="Account Name">{fieldLabels.Sequence}</div>
+									</th>
+									<th class="slds-is-resizable" scope="col">
+										<div class="slds-truncate" title="Name">Name</div>
+									</th>
+									<template if:true={taskParams}>
+										<th class="slds-is-resizable" scope="col">
+											<div class="slds-truncate" title={fieldLabels.DeveloperName}>
+												{label.HashTag}
+											</div>
+										</th>
+									</template>
+									<th class="slds-is-resizable" scope="col">
+										<div class="slds-truncate" title={fieldLabels.Guidance}>
+											{fieldLabels.Guidance}
+										</div>
+									</th>
+									<template if:true={isTask}>
+										<th class="slds-is-resizable" scope="col">
+											<div class="slds-truncate" title={fieldLabels.ResourceRole}>
+												{fieldLabels.ResourceRole}
+											</div>
+										</th>
+									</template>
+									<template if:true={taskParams}>
+										<th class="slds-is-resizable" scope="col">
+											<div class="slds-truncate" title={fieldLabels.DataType}>
+												{fieldLabels.DataType}
+											</div>
+										</th>
+										<th class="slds-is-resizable" scope="col">
+											<div class="slds-truncate"></div>
+										</th>
+									</template>
+									<th class="slds-is-resizable" scope="col">
+										<div class="slds-truncate" title={label.Actions}>{label.Actions}</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="row_drag">
+								<template for:each={activityGroupData} for:item="ag" for:index="indexVar">
+									<tr key={ag.Id} id={ag.Id} class="slds-hint-parent dragRows">
+										<td data-label="Sequence">
+											<div title="Sequence">
+												<lightning-input
+													required="true"
+													data-id={ag.Id}
+													name="Sequence"
+													label="Name"
+													value={ag.Sequence_field}
+													variant="label-hidden"
+													onchange={handleChange}
+													read-only="true"
+												></lightning-input>
+											</div>
+										</td>
+										<td data-label="Name">
+											<div
+												title="Name"
+												class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right"
+											>
+												<lightning-input
+													data-id={ag.Id}
+													name="Name"
+													label="Name"
+													required
+													value={ag.Name}
+													variant="label-hidden"
+													onchange={handleChange}
+												>
+												</lightning-input>
+												<c-link-scope-parameter
+													if:true={ag.isTaskParameter}
+													data-id={ag.Sequence_field}
+													task-template-id={ag.taskParameterId}
+													selected-scope-parameter-id={ag.scopeParameterId}
+													onselection={handleLinkScopeParameterToTaskParameter}
+												></c-link-scope-parameter>
+											</div>
+										</td>
+										<template if:true={taskParams}>
+											<td data-label={label.HashTag}>
+												<div title={label.HashTag}>
+													<lightning-input
+														data-id={ag.Id}
+														name="developerName"
+														label={label.HashTag}
+														value={ag.developerName}
+														variant="label-hidden"
+														read-only
+													>
+													</lightning-input>
+												</div>
+											</td>
+										</template>
+										<td data-label="Guidance">
+											<div title="Guidance">
+												<lightning-input
+													data-id={ag.Id}
+													name="Guidance"
+													label="Guidance"
+													value={ag.Guidance_field}
+													variant="label-hidden"
+													onchange={handleChange}
+													readonly={ag.isLinked}
+												></lightning-input>
+											</div>
+										</td>
+										<template if:true={isTask}>
+											<td data-label="Resource">
+												<div title="Resource">
+													<c-custom-lookup
+														object-name="Product__c"
+														activity-ag-record-id={ag.Id}
+														onselected={selectedResource}
+														level="Task"
+														filter-field="Name"
+														filter-criteria={filterCriteriaString}
+														label=""
+														rate-card-id={estimateRateCardId}
+														default-record-id={ag.ResourceroleId_field}
+														placeholder="search Resource"
+														icon-name="standard:product"
+													>
+													</c-custom-lookup>
+												</div>
+											</td>
+										</template>
+										<template if:true={taskParams}>
+											<td data-label="Data Type">
+												<div title="Data Type">
+													<lightning-combobox
+														name="Datatype"
+														data-id={ag.Id}
+														value={ag.Datatype_field}
+														placeholder="Select Data Type"
+														options={picklistValues.data.values}
+														variant="label-hidden"
+														onchange={handleChange}
+														readonly={ag.isLinked}
+													></lightning-combobox>
+												</div>
+											</td>
+											<td data-label={label.EstimateDuration}>
+												<div title={label.EstimateDuration}>
+													<lightning-button
+														label={label.EstimateDuration}
+														data-id={ag.Id}
+														onclick={addValues}
+														disabled={ag.Disabled}
+													></lightning-button>
+												</div>
+											</td>
+										</template>
+										<td data-label="Actions">
+											<div title="Actions">
+												<lightning-button-icon
+													icon-name={label.AddIcon}
+													data-id={ag.Id}
+													onclick={addRow}
+													variant="brand"
+													alternative-text={label.AddRow}
+													class="slds-m-left_xx-small"
+													title={label.AddRow}
+												>
+												</lightning-button-icon>
+												<lightning-button-icon
+													icon-name={label.DeleteIcon}
+													data-id={ag.Id}
+													onclick={removeRow}
+													variant="brand"
+													alternative-text={label.DeleteButton}
+													class="slds-m-left_xx-small"
+													title={label.DeleteButton}
+													disabled={isRemoveDisabled}
+												>
+												</lightning-button-icon>
+												<template if:true={isCloneEnabled}>
+													<lightning-button-icon
+														icon-name="utility:copy"
+														data-id={ag.Id}
+														onclick={cloneRow}
+														variant="brand"
+														alternative-text={label.CloneButton}
+														class="slds-m-left_xx-small"
+														title={label.CloneButton}
+													>
+													</lightning-button-icon>
+												</template>
+												<template if:true={ag.canCopyPaste}>
+													<lightning-button-icon
+														icon-name="utility:copy_to_clipboard"
+														data-id={ag.Id}
+														onclick={copyActivityGroup}
+														variant="brand"
+														alternative-text={label.CopyToClipboard}
+														class="slds-m-left_xx-small"
+														title={label.CopyToClipboard}
+													>
+													</lightning-button-icon>
+													<lightning-button-icon
+														icon-name="utility:paste"
+														data-id={ag.Id}
+														onclick={pasteActivityGroup}
+														variant="brand"
+														alternative-text={label.PasteFromClipboard}
+														class="slds-m-left_xx-small"
+														title={label.PasteFromClipboard}
+														disabled={isPasteActivityGroupDisabled}
+													>
+													</lightning-button-icon>
+												</template>
+											</div>
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={closeModal}>
+						{label.CancelButton}
+					</button>
+					<button
+						class="slds-button slds-button_neutral slds-button_brand"
+						disabled={disableSave}
+						onclick={validateAndSave}
+					>
+						{label.SaveButton}
+					</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- modal end -->
+</template>

@@ -1,0 +1,45 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+<template>
+	<template if:true={uniqueBoundary}>
+		<c-message-service boundary={uniqueBoundary}></c-message-service>
+	</template>
+
+	<div class="slds-modal__content">
+		<template for:each={inputFields} for:item="field">
+			<template if:true={field.isCustomLookup}>
+				<c-custom-lookup
+					key={field.key}
+					lookup-key={field.key}
+					rate-card-id={field.rateCardId}
+					object-name="Product__c"
+					activity-ag-record-id={field.customLookupId}
+					onselected={handleRecordSelect}
+					required={field.required}
+					level={field.level}
+					filter-field="Name"
+					label="Resource"
+					placeholder="Search Resource"
+					icon-name="standard:product"
+				>
+				</c-custom-lookup>
+			</template>
+			<template if:false={field.isCustomLookup}>
+				<lightning-input
+					class="slds-p-around_xx-small"
+					key={field.key}
+					name={field.key}
+					formatter={field.formatter}
+					type={field.type}
+					value={field.value}
+					label={field.label}
+					required={field.required}
+					min={field.min}
+					max={field.max}
+				></lightning-input>
+			</template>
+		</template>
+	</div>
+</template>

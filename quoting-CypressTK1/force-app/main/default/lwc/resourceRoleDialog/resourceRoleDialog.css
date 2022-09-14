@@ -1,0 +1,22 @@
+.filter-menu {
+	top: 25px;
+	z-index: 1;
+	margin-bottom: -10px;
+	left: -16px;
+	padding-top: 0px;
+	position: relative;
+}
+
+.advanced-search-popover {
+	position: absolute;
+	top: 7.97rem;
+	left: -0.6rem;
+}
+
+.container {
+	position: relative;
+}
+
+.main {
+	min-height: 41vh;
+}

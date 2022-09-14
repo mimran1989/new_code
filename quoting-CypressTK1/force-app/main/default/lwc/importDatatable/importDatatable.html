@@ -1,0 +1,49 @@
+<template>
+	<c-message-service></c-message-service>
+
+	<div class="slds-form-element">
+		<span class="slds-form-element__label" style="user-select: none"
+			><a onclick={handleDownloadSampleCsv}>
+				<lightning-icon
+					icon-name="utility:download"
+					size="x-small"
+					style="padding-right: 5px; position: relative; bottom: 2px"
+				></lightning-icon
+				>Download sample file</a
+			></span
+		>
+		<div style="padding-top: 0.25rem; user-select: none">
+			<input
+				type="file"
+				class="slds-file-selector__input slds-assistive-text"
+				accept=".csv"
+				onclick={handleFileInputClicked}
+				onchange={handleFileInputChanged}
+				id="upload-input"
+			/>
+			<label
+				class="slds-form-element__label slds-file-selector__body"
+				for="upload-input"
+				id="file-selector-secondary-label102"
+			>
+				<span class="slds-file-selector__button">
+					<lightning-icon
+						icon-name="utility:upload"
+						size="x-small"
+						style="padding-right: 5px; position: relative; bottom: 2px"
+					></lightning-icon
+					><a>Upload file</a></span
+				>
+			</label>
+		</div>
+	</div>
+
+	<c-base-datatable
+		if:true={isFileLoaded}
+		editable-fields=""
+		unique-boundary={uniqueBoundary}
+		key-field="rowNumber"
+		suppress-bottom-bar="true"
+	>
+	</c-base-datatable>
+</template>

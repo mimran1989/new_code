@@ -1,0 +1,5 @@
+.radio-combo-inline .slds-form-element__control .slds-radio
+{
+    display: inline-block;
+    margin-right: 2rem;
+}

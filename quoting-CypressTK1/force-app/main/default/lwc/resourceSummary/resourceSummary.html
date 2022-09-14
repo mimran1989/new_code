@@ -1,0 +1,37 @@
+<!--
+  ~ Provus Services Quoting
+  ~ Copyright (c) 2022 Provus Inc. All rights reserved.
+  -->
+
+<!-- Resource Summary -->
+<template>
+	<c-message-service class="component-state" boundary="component-state"></c-message-service>
+	<c-message-service
+		class="layer-two"
+		boundary="layer-two"
+		onafteraddresource={handleAfterAddResource}
+		onafteradjusthours={handleAfterAdjustHours}
+		onafterspecifyavailability={handleAfterSpecifyAvailability}
+		onaftersplit={refreshData}
+	></c-message-service>
+	<div class="slds-grid slds-p-bottom_small">
+		<div class="slds-col">
+			<lightning-button label="Add resource" onclick={openAddResourceDialog}></lightning-button>
+		</div>
+		<div class="slds-col">
+			<lightning-input
+				type="checkbox"
+				label="Not applicable"
+				checked={isNotApplicable}
+				onclick={toggleApplicable}
+			></lightning-input>
+		</div>
+	</div>
+	<lightning-tree-grid
+		key-field="id"
+		data={data}
+		columns={columns}
+		hide-checkbox-column="false"
+		onrowaction={handleResourceRowAction}
+	></lightning-tree-grid>
+</template>

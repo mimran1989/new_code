@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivityDate__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(Type__c,
+&quot;Occurs on a Date&quot;, AlignmentDate__c,
+&quot;Aligned to Project Activity&quot;, CASE(Alignment__c,
+&quot;Start of Project&quot;, QuoteId__r.ServiceStartDate__c,
+&quot;End of Project&quot;, QuoteId__r.ServiceEndDate__c,
+&quot;Start of Phase&quot;, ProjectPhase__r.StartDate__c,
+&quot;End of Phase&quot;, ProjectPhase__r.EndDate__c,
+&quot;Start of Section&quot;, QuoteSection__r.StartDate__c,
+&quot;End of Section&quot;, QuoteSection__r.EndDate__c,
+&quot;Start of Period&quot;, QuotePeriod__r.StartDate__c,
+&quot;End of Period&quot;, QuotePeriod__r.EndDate__c,
+&quot;Start of Period Group&quot;, QuotePeriodGroup__r.StartDate__c,
+&quot;End of Period Group&quot;, QuotePeriodGroup__r.EndDate__c,
+null),
+&quot;Aligned to another Milestone&quot;, MilestoneId__r.AlignmentDate__c,
+null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Activity Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

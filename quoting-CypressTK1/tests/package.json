@@ -1,0 +1,17 @@
+{
+	"version": "0.0.1",
+	"description": "e2e test suite",
+	"scripts": {
+		"test:functional:ci": "cypress run --env namespacePrefix=PSQ -b chromium"
+	},
+	"author": "Provus Inc.",
+	"dependencies": {
+		"@badeball/cypress-cucumber-preprocessor": "latest",
+		"@cypress/webpack-preprocessor": "latest",
+		"cypress": "latest",
+		"fs-extra": "^10.1.0",
+		"jsforce": "^1.11.0",
+		"ts-loader": "^9.3.1",
+		"yargs": "^17.5.1"
+	}
+}

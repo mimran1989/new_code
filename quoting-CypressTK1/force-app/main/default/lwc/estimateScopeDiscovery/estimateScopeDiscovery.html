@@ -1,0 +1,83 @@
+<template>
+	<c-message-service boundary="component-state"></c-message-service>
+	<div>
+		<lightning-layout horizontal-align="space">
+			<lightning-layout-item padding="around-small" size="3">
+				<div class="header-column">
+					<p class="field-title" title="Parameter Name">{Label.PARAMETER}</p>
+					<p>{scope.name}</p>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="2">
+				<div class="header-column">
+					<p class="field-title" title="Hash tag">{Label.HASHTAG}</p>
+					<p>{scope.hashtag}</p>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="2">
+				<div class="header-column">
+					<p class="field-title" title="Hash tag">{Label.GUIDANCE}</p>
+					<p>{scope.guidance}</p>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="5">
+				<div class="header-column">
+					<p class="field-title" title="Value">Value</p>
+					<p>
+						<template if:true={isInteger}>
+							<lightning-input
+								name="integerValue"
+								type="number"
+								step="0.01"
+								value={scope.value.integerValue}
+								onchange={handleChange}
+								variant="label-hidden"
+							></lightning-input>
+						</template>
+						<template if:true={isCheckBox}>
+							<lightning-input
+								name="booleanValue"
+								type="checkbox"
+								checked={scope.value.booleanValue}
+								value="true"
+								onchange={handleChange}
+								variant="label-hidden"
+							></lightning-input>
+						</template>
+						<template if:true={isPicklist}>
+							<lightning-combobox
+								name="textValue"
+								value={scope.value.textValue}
+								options={picklistValues}
+								onchange={handleChange}
+								variant="label-hidden"
+							>
+							</lightning-combobox>
+						</template>
+						<template if:true={isIntegerTier}>
+							<lightning-input
+								name="integerValue"
+								type="number"
+								value={scope.value.integerValue}
+								onchange={handleChange}
+								variant="label-hidden"
+							></lightning-input>
+						</template>
+					</p>
+				</div>
+			</lightning-layout-item>
+		</lightning-layout>
+		<template if:true={isIntegerTier}>
+			<lightning-datatable
+				key-field="id"
+				data={tiers}
+				columns={columns}
+				hide-checkbox-column="true"
+			>
+			</lightning-datatable>
+		</template>
+	</div>
+	<div class="slds-grid slds-grid_align-end">
+		<div class="slds-col">{indexPosition}</div>
+	</div>
+</template>

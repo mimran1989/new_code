@@ -1,0 +1,48 @@
+<template>
+	<c-message-service boundary="component-state"></c-message-service>
+	<div class="main">
+		<lightning-input
+			class="hours-per-occurrence"
+			type="number"
+			value={hoursPerOccurrence}
+			label={labels.LABEL_HOURS_PER_OCCURRENCE}
+			onchange={handleUpdateHoursPerOccurrence}
+			required="true"
+			min="0"
+			message-when-range-underflow={labels.LABEL_ERROR_NEGATIVE_VALUE}
+		></lightning-input>
+		<lightning-input
+			class="occurrence"
+			type="number"
+			value={occurrence}
+			label={labels.LABEL_OCCURS_HOW_OFTEN}
+			placeholder={labels.LABEL_HOW_MANY_TIMES}
+			onchange={handleUpdateOccurrence}
+			required="true"
+			min="0"
+			message-when-range-underflow={labels.LABEL_ERROR_NEGATIVE_VALUE}
+		></lightning-input>
+		<lightning-input
+			class="max-occurrence"
+			type="number"
+			value={maxOccurences}
+			label={labels.LABEL_MAX_NUMBER_OF_OCCURRENCE}
+			onchange={handleUpdateMaxOccurrence}
+			min="0"
+			message-when-range-underflow={labels.LABEL_ERROR_NEGATIVE_VALUE}
+		></lightning-input>
+		<div class="slds-modal__footer">
+			<lightning-button
+				class="slds-p-right_x-small"
+				variant="neutral"
+				label={labels.LABEL_CANCEL}
+				onclick={handleCancel}
+			></lightning-button>
+			<lightning-button
+				variant="brand"
+				label={labels.LABEL_SAVE}
+				onclick={handleSave}
+			></lightning-button>
+		</div>
+	</div>
+</template>

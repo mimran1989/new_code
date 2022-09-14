@@ -1,0 +1,22 @@
+<template>
+	<template if:true={recordId}>
+		<c-quick-action-panel header={LABEL_RESOURCE_DEFAULT_HEADER}>
+			<c-estimate-resources record-id={recordId} disable-button-status={disableButtonStatus}>
+			</c-estimate-resources>
+			<div slot="footer">
+				<lightning-button
+					variant="brand"
+					label={LABEL_CLOSE_BUTTON}
+					onclick={handleCloseDialog}
+				></lightning-button>
+				<lightning-button
+					variant="brand"
+					label={LABEL_SAVE_BUTTON}
+					onclick={handleSaveRecord}
+					disabled={disableSaveButton}
+					style="margin: 8px"
+				></lightning-button>
+			</div>
+		</c-quick-action-panel>
+	</template>
+</template>

@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "es2020",
+		"lib": ["es6", "dom"],
+		"esModuleInterop": true,
+		"module": "commonjs",
+		"types": ["node", "jest"],
+		"experimentalDecorators": true
+	}
+}

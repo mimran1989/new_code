@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+     <apiVersion>55.0</apiVersion>
+    <description>Save as Template Quick Action</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Save as Template Quick Action</masterLabel>
+    <targets>
+        <target>lightning__RecordAction</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordAction">
+            <actionType>Action</actionType>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

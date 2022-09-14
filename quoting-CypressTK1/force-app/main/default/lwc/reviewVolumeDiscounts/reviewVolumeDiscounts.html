@@ -1,0 +1,23 @@
+<!-- Review Volume Discounts -->
+<template>
+	<h3 class="slds-text-title_bold">
+		{labels.BasedOn} <span class="slds-badge">{volumeDiscount.categoryLabel}</span>
+	</h3>
+	<br />
+	<div style="min-height: 300px">
+		<lightning-datatable
+			data={volumeDiscount.headcountData}
+			columns={headcountColumns}
+			key-field="id"
+			hide-checkbox-column="true"
+		>
+		</lightning-datatable>
+		<lightning-datatable
+			data={volumeDiscount.laborRevenueData}
+			columns={laborRevenueColumns}
+			key-field="id"
+			hide-checkbox-column="true"
+		>
+		</lightning-datatable>
+	</div>
+</template>
